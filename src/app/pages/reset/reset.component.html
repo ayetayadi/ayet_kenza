@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<!-- Coding By CodingNepal - youtube.com/codingnepal -->
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset Password Form</title>
+    <link rel="stylesheet" href="reset.component.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+</head>
+
+<body>
+    <div class="wrapper">
+        <i id="logo" class="fa-solid fa-sparkle" style="color: #9155fd;"></i>
+        <h6 class="MuiTypography-root MuiTypography-h6 css-1cb7fve">Banner</h6>
+
+
+
+        <form action="#">
+            <div class="MuiBox-root css-1fobf8d">
+                <h5 class="MuiTypography-root MuiTypography-h5 css-vsfzib">Nouveau Mot de Passe! 👏</h5>
+            </div>
+           
+            <div class="field password">
+                <p class="MuiBox-root MuiTypography-root MuiTypography-body2 css-4yvesp">Veuillez entrer un nouveau mot
+                    de passe</p>
+                <div class="input-area">
+                    <input type="password" name="password" [(ngModel)] ="password" placeholder="Créer votre nouveau mot de passe" required>
+                    <i class="icon fas fa-envelope"></i>
+                    <i class="error error-icon fas fa-exclamation-circle"></i>
+                </div>
+                <div class="error error-txt">Mot de passe ne peut pas être vide</div>
+            </div>
+            <div class="field password">
+                <div class="input-area">
+                    <input type="password"  name="confirmPassword" [(ngModel)] ="confirmPassword" placeholder="Confirmer votre mot de passe" required>
+                    <i class="icon fas fa-solid fa-key"></i>
+                    <i class="error error-icon fas fa-exclamation-circle"></i>
+                </div>
+                <div class="error error-txt">Mot de passe ne peut pas être vide</div>
+            </div>
+            <input type="submit" value="Continuer" (click)="resetPassword()">
+        </form>
+    </div>
+    <script>
+        const form = document.querySelector("form");
+        pField = form.querySelector(".password"),
+            pInput = eField.querySelector("input"),
+            form.onsubmit = (e) => {
+                e.preventDefault(); //preventing from form submitting
+                //if email and password is blank then add shake class in it else call specified function
+                (pInput.value == "") ? pField.classList.add("shake", "error") : checkEmail();
+                setTimeout(() => { //remove shake class after 500ms
+                    pField.classList.remove("shake");
+                }, 500);
+                pInput.onkeyup = () => { checkPass(); } //calling checkEmail function on email input keyup
+                function checkPass() { //checkPass function
+                    if (pInput.value == "") { //if pass is empty then add error and remove valid class
+                        pField.classList.add("error");
+                        pField.classList.remove("valid");
+                    } else { //if pass is empty then remove error and add valid class
+                        pField.classList.remove("error");
+                        pField.classList.add("valid");
+                    }
+                }
+                //if eField and pField doesn't contains error class that mean user filled details properly
+                if (!pField.classList.contains("error")) {
+                    window.location.href = form.getAttribute("action"); //redirecting user to the specified url which is inside action attribute of form tag
+                }
+            }
+    </script>
+</body>
+
+</html>
