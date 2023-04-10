@@ -18,6 +18,8 @@ export class AnnonceursComponent implements OnInit {
   currentPage = 1;
   searchText = '';
 
+  annonceurEmail: string = '';
+
   emailA: string = '';
   email: string = '';
   username: string = '';
@@ -28,13 +30,13 @@ export class AnnonceursComponent implements OnInit {
   adresseE: string = '';
   domaineE: string = '';
 
-  message: string ='';
+  message: string = '';
 
 
   constructor(private http: HttpClient, private elementRef: ElementRef, public shared: SharedService, public auth1: AuthadminService, private auth2: AuthannonceurService) { }
 
   ngOnInit(): void {
-    this.auth2.getAnnonceurs().subscribe((data: any[]) => {
+    this.auth1.getAnnonceurs().subscribe((data: any[]) => {
       console.log(data);
       this.annonceurs = data;
     }, error => {
@@ -47,9 +49,9 @@ export class AnnonceursComponent implements OnInit {
     s.src = "../assets/js/main.js";
     this.elementRef.nativeElement.appendChild(s);
 
-   
-  
-    
+
+
+
 
   }
 
@@ -98,25 +100,27 @@ export class AnnonceursComponent implements OnInit {
   }
 
 
-
-  getEmail(email: string): string {
-    console.log(email);
-    return this.email;
+//Get that email from the column of the annonceurs when you click on button Modifier
+  getEmail(emailA: string): string {
+    console.log(emailA);
+    this.emailA = emailA;
+    return emailA;
   }
-  
+
+  //Retrieve that email and console it
+  useEmail() {
+    console.log(this.getEmail(this.emailA));
+  }
 
   editAnnonceur(): void {
-    console.log("Input email:", this.email);
-    const emailFromFunction = this.getEmail(this.email);
-    console.log("Returned email from getEmail:", emailFromFunction);
-    
-    this.http.put(`http://localhost:3000/admin/editAnnonceur/${emailFromFunction}`, { 
-      username: this.username, 
-      email: this.email, 
-      tel: this.tel, 
-      nomE: this.nomE, 
-      emailE: this.emailE, 
-      domaineE: this.domaineE, 
+    console.log(this.getEmail(this.emailA));
+    this.http.put(`http://localhost:3000/admin/editAnnonceur/${this.getEmail(this.emailA)}`, {
+      username: this.username,
+      email: this.email,
+      tel: this.tel,
+      nomE: this.nomE,
+      emailE: this.emailE,
+      domaineE: this.domaineE,
       adresseE: this.adresseE
     }).subscribe(
       () => {
@@ -127,7 +131,7 @@ export class AnnonceursComponent implements OnInit {
       }
     );
   }
-  
+
 
 
   createAnnonceur(): void {

@@ -34,11 +34,7 @@ export class AuthannonceurService {
     return this.http.get(this.url + `getById/${id}`);
   }
 
-  getAnnonceurs() {
-    return this.http.get<any[]>(this.url + 'getAll');
-  }
-
-
+ 
   changePassword(oldPassword: string, newPassword: string, email: string) {
     const data = {
       oldPassword: oldPassword,
@@ -63,17 +59,6 @@ export class AuthannonceurService {
     this.Profil.username = username;
     this.Profil.email = email;
     // this.isLoggedIn = true
-  }
-
-  getFromToken() {
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6I…3NTN9.IPx06j-_WZu4wxaI6dUdrMQtAUw7KQfHDydA-5ovgL4';
-    if (token) {
-      const payload: any = jwt_decode(token);
-      console.log(payload);
-      const email = payload.email;
-      console.log(email);
-      return email;
-    }
   }
 
 
@@ -150,12 +135,6 @@ export class AuthannonceurService {
     return this.http.post(url, body);
   }
 
-  /*  createTeam(nom: string) {
-      const body = { nom: nom };
-      return this.http.post(this.url +'/createTeam', body);
-    }
-  */
-
   getTeamsForAnnonceur(id: string): Observable<any> {
     console.log(this.shared.getAnnonceurToken());
     const tokenObj = this.shared.getAnnonceurToken() as unknown as { token: string };
@@ -167,52 +146,64 @@ export class AuthannonceurService {
       })
     };
     const params = new HttpParams().set('token', token);
-    return this.http.get(`${this.url}teams`, { headers: httpOptions.headers, params });
-  }
-
-
-
- 
-
-
-
-  sendInvitation(email: string): Observable<any> {
-    console.log(this.shared.getAnnonceurToken());
-    const tokenObj = this.shared.getAnnonceurToken() as unknown as { token: string };
-    const token = tokenObj.token;
-    console.log(token);
-    const data = { email };
-    console.log(data);
-    return this.http.post(`http://localhost:3000/annonceur/inviterM?token=` + token, data)
-      .pipe(
-        catchError(error => {
-          console.error('Error sending invitation:', error);
-          return of({ error: true, message: 'Error sending invitation' });
-        })
-      );
-  }
-
-
-  accept(membre: any) {
-
-    return this.http.post(this.url + 'accept', membre);
+    return this.http.get(`${this.url}getTeams`, { headers: httpOptions.headers, params });
   }
 
   createTeam(token: string, nom: string): Observable<any> {
     return this.http.post<any>(`http://localhost:3000/annonceur/createTeam?token=${token}`, { nom });
   }
 
-
-
-
-
-  getMembersByTeam(teamName: string) {
-    return this.http.get(`http://localhost:3000/annonceur/teamsM/${teamName}/members`);
+  deleteTeam(teamName: string, token: string) {
+    const url = `http://localhost:3000/annonceur/deleteTeam/${teamName}?token=${token}`;
+    return this.http.delete(url);
   }
 
-  deleteMember(teamName: string, memberName: string) {
-    const url = `localhost:3000/annonceur//teamsM/${teamName}/members/${memberName}`;
-    return this.http.delete(url);
+
+  updateTeam(teamName: string, newTeamName: string): Observable<any> {
+    const tokenObj = this.shared.getAnnonceurToken() as unknown as { token: string };
+    const token = tokenObj.token;
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      })
+    };
+    const url = `${this.url}updateTeam/${teamName}?token=${token}`;
+    const data = { nom: newTeamName };
+    console.log(this.shared.getAnnonceurToken());
+      return this.http.put(url, data, { headers: httpOptions.headers });
+  }
+
+ 
+  sendInvitation(email: string, team: string): Observable<any> {
+    console.log(this.shared.getAnnonceurToken());
+    const tokenObj = this.shared.getAnnonceurToken() as unknown as { token: string };
+    const token = tokenObj.token;
+    console.log(token);
+    const data = { email, nom: team};
+    console.log(data);
+    return this.http.post(`http://localhost:3000/annonceur/inviteMember?token=` + token, data)
+  }
+
+  getMembersByTeam(teamName: string): Observable<any> {
+    const url = `${this.url}getMembersByTeam/${teamName}`;
+    return this.http.get(url);
+  }
+
+
+  acceptInvitation(code: string) : Observable<string>{
+    {
+      const url = `${this.url}acceptInvitation`;
+      const body = { code };
+      return this.http.post<string>(url, body);
+    }
+  }
+
+ 
+  deleteMember(email: string, team: string): Observable<any>{
+    const url = `${this.url}deleteMember`;
+    const body = { email: email, nom: team };
+    return this.http.delete(url, { body });
   }
 
 

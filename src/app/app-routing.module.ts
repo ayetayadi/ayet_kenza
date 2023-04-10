@@ -35,6 +35,9 @@ import { UsersProfileComponent } from './pages/users-profile/users-profile.compo
 import { AnnonceursComponent } from './pages/annonceurs/annonceurs.component';
 import { ResetComponent } from './pages/reset/reset.component';
 import { ForgotComponent } from './pages/forgot/forgot.component';
+import { EquipesComponent } from './pages/equipes/equipes.component';
+import { MembresComponent } from './pages/membres/membres.component';
+import { InvitationComponent } from './pages/invitation/invitation.component';
 
 
 const routes: Routes = [
@@ -44,6 +47,9 @@ const routes: Routes = [
   { path: 'forgotPassword', component: ForgotComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'annonceurs', component: AnnonceursComponent },
+  { path: 'equipes', component: EquipesComponent },
+  { path: 'equipes/:nom/membres', component: MembresComponent },
+  { path: 'invitation', component: InvitationComponent },
   { path: 'alerts', component: AlertsComponent },
   { path: 'accordion', component: AccordionComponent },
   { path: 'badges', component: BadgesComponent },

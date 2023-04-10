@@ -1,0 +1,79 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Liste des membres de l'équipe "{{ teamName }}"</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/">Accueil</a></li>
+                <li class="breadcrumb-item"><a routerLink="/equipes">Equipes</a></li>
+                <li class="breadcrumb-item active">Membres</li>
+            </ol>
+        </nav>
+    </div>
+    <div *ngIf="membres.length > 0; else noMembers">
+        <section class="section">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Membres de l'équipe "{{ teamName }}"</h5>
+                            <button class="card-button" type="button" data-bs-toggle="modal" data-bs-target="#basicModal" >+ Inviter</button>
+                            <table class="table datatable">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Avatar</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let membre of membres; let i=index">
+                                        <th scope="row"><br>{{i + 1}}</th>
+                                        <td><img [src]="generateAvatar(membre.email)" style="width: 50px;"></td>
+                                        <td><br>{{membre.email}}</td>
+                                        <td><br>{{ membre.status }}</td>
+                                        <td><button class="card-btn btn1" (click)="deleteMember(membre.email, teamName)"><i class="fa fa-trash"></i></button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+<ng-template #noMembers>
+    <section class="section min-vh-100 d-flex flex-column align-items-center justify-content-center">
+        <div class="col-lg-5">
+            <h2>Aucun membre dans "{{ teamName }}"</h2>
+            <button class="card-button1" type="button" data-bs-toggle="modal" data-bs-target="#basicModal" >+ Inviter</button>
+        </div>
+    </section>
+    
+</ng-template>
+
+
+<form>
+    <div class="modal fade" id="basicModal" tabindex="-1">
+        <div class="modal-dialog ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5>Inviter des membres dans l'équipe "{{ teamName }}"</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="field email">
+                        <div class="input-area">
+                            <input name="email" type="email" placeholder="Saisir l'email" [(ngModel)]="email" required>
+                            <i class="icon fa fa-group"></i>
+                        </div>
+                    </div>
+                    <div *ngIf="message">{{ message }}</div>
+                    <button type="button" class="button3" (click)="invite()">Envoyer l'invitation</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

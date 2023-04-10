@@ -37,8 +37,6 @@ export class UsersProfileComponent implements OnInit {
   domaineE: string = '';
   adresseE: string = '';
   
-
-
   errorMessage: string = '';
 
   constructor(private auth2: AuthannonceurService, private router: Router) {

@@ -19,7 +19,7 @@
             <td>{{ annonceur.email }}</td>
             <td>
                <button (click)="deleteAnnonceur(annonceur.email)">Supprimer</button>
-               <button data-bs-toggle="modal" data-bs-target="#editModal" class="editBtn" (click)="getEmail(annonceur.email)"> Modifier </button>
+               <button data-bs-toggle="modal" data-bs-target="#editModal" class="editBtn" (click)="getEmail(annonceur.email); useEmail()"> Modifier </button>
             </td>
          </tr>
       </tbody>

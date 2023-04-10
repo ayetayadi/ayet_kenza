@@ -33,19 +33,19 @@ export class RegisterComponent implements OnInit {
       res => {
         this.token = res
         const usernameAnn = this.annonceur.username;
-        console.log( `Username de l'annonceur enregistré: `+ usernameAnn)
+        console.log(`Username de l'annonceur enregistré: `+ usernameAnn)
         const emailAnn = this.annonceur.email;
-        console.log( `Email de l'annonceur enregistré: `+ emailAnn)
+        console.log(`Email de l'annonceur enregistré: `+ emailAnn)
         const telAnn = this.annonceur.tel;
-        console.log( `Username de l'annonceur enregistré: `+ telAnn)
+        console.log(`Username de l'annonceur enregistré: `+ telAnn)
         const nomE = this.annonceur.nomE;
         console.log(`Nom de l'entreprise de l'annonceur enregistré: ` + nomE)
         const emailE = this.annonceur.emailE;
         console.log(`Email de l'entreprise de l'annonceur enregistré: ` + emailE)
         const domaineE = this.annonceur.domaineE;
-        console.log(`Nom de l'entreprise de l'annonceur enregistré: ` + domaineE)
+        console.log(`Domaine de l'entreprise de l'annonceur enregistré: ` + domaineE)
         const adresseE = this.annonceur.adressE;
-        console.log(`Nom de l'entreprise de l'annonceur enregistré: ` + adresseE)
+        console.log(`Adresse de l'entreprise de l'annonceur enregistré: ` + adresseE)
         localStorage.setItem('token', this.token)
         this.router.navigate(['/'])
         console.log( `Successful Navigation`)

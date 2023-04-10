@@ -45,6 +45,8 @@ import { AnnonceursComponent } from './pages/annonceurs/annonceurs.component';
 import { ForgotComponent } from './pages/forgot/forgot.component';
 import { ResetComponent } from './pages/reset/reset.component';
 import { EquipesComponent } from './pages/equipes/equipes.component';
+import { MembresComponent } from './pages/membres/membres.component';
+import { InvitationComponent } from './pages/invitation/invitation.component';
 
 @NgModule({
   declarations: [
@@ -88,7 +90,9 @@ import { EquipesComponent } from './pages/equipes/equipes.component';
     AnnonceursComponent,
     ForgotComponent,
     ResetComponent,
-    EquipesComponent
+    EquipesComponent,
+    MembresComponent,
+    InvitationComponent
   ],
   imports: [
     BrowserModule,

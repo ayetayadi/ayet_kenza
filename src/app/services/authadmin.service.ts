@@ -50,6 +50,10 @@ export class AuthadminService {
     return this.isAdmin = true;
   }
 
+  getAnnonceurs() {
+    return this.http.get<any[]>(this.url + 'getAll');
+  }
+
   
   deleteAnnonceur(email: string) {
     console.log('Attempting to delete annonceur with email: ', email);
