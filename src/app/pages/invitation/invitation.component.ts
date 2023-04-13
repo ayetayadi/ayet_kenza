@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthannonceurService } from 'src/app/services/authannonceur.service';
+import { AuthMembreService } from 'src/app/services/auth-membre.service';
 
 @Component({
   selector: 'app-invitation',
@@ -15,13 +15,13 @@ export class InvitationComponent implements OnInit {
 
   code: string ='';
 
-  constructor(private route: ActivatedRoute, private auth2: AuthannonceurService, private router: Router) { }
+  constructor(private route: ActivatedRoute, private auth3: AuthMembreService, private router: Router) { }
 
   ngOnInit(): void {
   }
 
   acceptInvitation() :void{
-    this.auth2.acceptInvitation(this.code).subscribe(
+    this.auth3.acceptInvitation(this.code).subscribe(
       res => {
         console.log('Navigation to dashboard route successful!');
         this.router.navigate(['/dashboard']);

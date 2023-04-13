@@ -14,7 +14,6 @@ body {
     align-items: center;
     justify-content: center;
     background: #F4F5FA;
-    ;
 }
 
 ::selection {
@@ -23,7 +22,7 @@ body {
 }
 
 .wrapper {
-    width: 380px;
+    width: 600px;
     padding: 40px 30px 50px 30px;
     background: #fff;
     border-radius: 5px;

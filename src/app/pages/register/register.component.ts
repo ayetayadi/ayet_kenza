@@ -13,12 +13,14 @@ export class RegisterComponent implements OnInit {
   annonceur = {
     username: '',
     email: '',
+    dateNaiss: '',
     tel: '',
     password: '',
     nomE: '',
     emailE: '',
+    telE: '',
     domaineE: '',
-    adressE: ''
+    adresseE: ''
   }
 
   token: any;
@@ -36,15 +38,19 @@ export class RegisterComponent implements OnInit {
         console.log(`Username de l'annonceur enregistré: `+ usernameAnn)
         const emailAnn = this.annonceur.email;
         console.log(`Email de l'annonceur enregistré: `+ emailAnn)
+        const dateNaissAnn = this.annonceur.dateNaiss;
+        console.log(`Date de naissance de l'annonceur enregistré: `+ dateNaissAnn)
         const telAnn = this.annonceur.tel;
-        console.log(`Username de l'annonceur enregistré: `+ telAnn)
+        console.log(`Téléphone de l'annonceur enregistré: `+ telAnn)
         const nomE = this.annonceur.nomE;
         console.log(`Nom de l'entreprise de l'annonceur enregistré: ` + nomE)
         const emailE = this.annonceur.emailE;
         console.log(`Email de l'entreprise de l'annonceur enregistré: ` + emailE)
+        const telEAnn = this.annonceur.telE;
+        console.log(`Téléphone de l'entreprise l'annonceur enregistré: `+ telEAnn)
         const domaineE = this.annonceur.domaineE;
         console.log(`Domaine de l'entreprise de l'annonceur enregistré: ` + domaineE)
-        const adresseE = this.annonceur.adressE;
+        const adresseE = this.annonceur.adresseE;
         console.log(`Adresse de l'entreprise de l'annonceur enregistré: ` + adresseE)
         localStorage.setItem('token', this.token)
         this.router.navigate(['/'])

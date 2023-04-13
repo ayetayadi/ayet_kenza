@@ -30,8 +30,15 @@ export class LoginComponent implements OnInit {
     adressE: ''
   }
 
+  rememberMe: boolean = false;
+
+
   isAdminLoggedIn: boolean = false;
 
+  email: string = "";
+  password: string = "";
+  emailValid: boolean = true;
+  passwordValid: boolean = true;
 
   constructor(private shared: SharedService, private auth1: AuthadminService, private auth2: AuthannonceurService, private router: Router) {
 
@@ -97,6 +104,42 @@ export class LoginComponent implements OnInit {
     )
   }
 
+  onSubmit() {
+    //if email and password is blank then add error classes in it else call specified function
+    if (this.email.trim() === "") {
+      this.emailValid = false;
+    } else {
+      this.checkEmail();
+    }
+
+    if (this.password.trim() === "") {
+      this.passwordValid = false;
+    } else {
+      this.checkPass();
+    }
+
+    //if email and password fields are valid then submit the form
+    if (this.emailValid && this.passwordValid) {
+      // submit form or redirect to specified url
+    }
+  }
+
+  checkEmail() {
+    let pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/; //pattern for validate email
+    if (!this.email.match(pattern)) {
+      this.emailValid = false;
+    } else {
+      this.emailValid = true;
+    }
+  }
+
+  checkPass() {
+    if (this.password.trim() === "") {
+      this.passwordValid = false;
+    } else {
+      this.passwordValid = true;
+    }
+  }
 
 }
 

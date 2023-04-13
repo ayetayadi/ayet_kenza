@@ -43,7 +43,7 @@ import { InvitationComponent } from './pages/invitation/invitation.component';
 const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'reset', component: ResetComponent },
+  { path: 'resetPassword', component: ResetComponent },
   { path: 'forgotPassword', component: ForgotComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'annonceurs', component: AnnonceursComponent },

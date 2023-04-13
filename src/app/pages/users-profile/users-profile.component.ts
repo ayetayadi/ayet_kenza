@@ -21,9 +21,11 @@ export class UsersProfileComponent implements OnInit {
   updated = {
     username: '',
     email: '',
+    dateNaiss: '',
     tel: '',
     nomE: '',
     emailE:'',
+    telE: '',
     domaineE:'',
     adresseE:''
   }
@@ -31,9 +33,11 @@ export class UsersProfileComponent implements OnInit {
   id:string = '';
   username: string = '';
   email: string = '';
+  dateNaiss: string = '';
   tel: string = '';
   nomE: string = '';
   emailE: string = '';
+  telE: string = '';
   domaineE: string = '';
   adresseE: string = '';
   
@@ -50,12 +54,16 @@ export class UsersProfileComponent implements OnInit {
         console.log(this.username)
         this.email = response.email;
         console.log(this.email)
+        this.dateNaiss = response.dateNaiss;
+        console.log(this.dateNaiss)
         this.tel = response.tel;
         console.log(this.tel)
         this.nomE = response.nomE;
         console.log(this.nomE)
         this.emailE = response.emailE;
         console.log(this.emailE)
+        this.telE = response.telE;
+        console.log(this.telE)
         this.domaineE = response.domaineE;
         console.log(this.domaineE)
         this.adresseE = response.adresseE;
@@ -88,7 +96,7 @@ export class UsersProfileComponent implements OnInit {
   }
 
   updateProfile(){
-    this.auth2.updateAnnonceur(this.id, this.username, this.email, this.tel, this.nomE, this.emailE, this.domaineE, this.adresseE)
+    this.auth2.updateAnnonceur(this.id, this.username, this.email, this.dateNaiss, this.tel, this.nomE, this.emailE,this.telE, this.domaineE, this.adresseE)
     .subscribe({
       next: () => {
         const username = this.username;

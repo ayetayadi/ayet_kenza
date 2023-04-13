@@ -98,7 +98,7 @@ export class AuthannonceurService {
     })
   }
 
-  updateAnnonceur(id: string, username: string, email: string, tel: string, nomE: string, emailE: string, domaineE: string, adresseE: string) {
+  updateAnnonceur(id: string, username: string, email: string, dateNaiss: string, tel: string, nomE: string, emailE: string, telE: string, domaineE: string, adresseE: string) {
     console.log(this.shared.getAnnonceurToken());
     const tokenObj = this.shared.getAnnonceurToken() as unknown as { token: string };
     const token = tokenObj.token;
@@ -109,7 +109,7 @@ export class AuthannonceurService {
         'Authorization': `Bearer ${token}`
       })
     };
-    const body = { id, username, email, tel, nomE, emailE, domaineE, adresseE };
+    const body = { id, username, email,dateNaiss, tel, nomE, emailE,telE, domaineE, adresseE };
     return this.http.put('http://localhost:3000/annonceur/editProfile?token=' + token, body, httpOptions);
 
   }
@@ -191,14 +191,7 @@ export class AuthannonceurService {
   }
 
 
-  acceptInvitation(code: string) : Observable<string>{
-    {
-      const url = `${this.url}acceptInvitation`;
-      const body = { code };
-      return this.http.post<string>(url, body);
-    }
-  }
-
+  
  
   deleteMember(email: string, team: string): Observable<any>{
     const url = `${this.url}deleteMember`;

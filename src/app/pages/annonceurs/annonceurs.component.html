@@ -15,7 +15,7 @@
       <tbody>
          <tr *ngFor="let annonceur of getPaginatedAnnonceurs(); let i = index">
             <td>{{ (currentPage - 1) * itemsPerPage + i + 1 }}</td>
-            <td>{{ annonceur.username }}</td>
+            <td>{{annonceur.username }}</td>
             <td>{{ annonceur.email }}</td>
             <td>
                <button (click)="deleteAnnonceur(annonceur.email)">Supprimer</button>
