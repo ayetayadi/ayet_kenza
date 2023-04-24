@@ -40,13 +40,37 @@ import { PagesError404Component } from './pages/pages-error404/pages-error404.co
 import { PagesBlankComponent } from './pages/pages-blank/pages-blank.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AnnonceursComponent } from './pages/annonceurs/annonceurs.component';
 import { ForgotComponent } from './pages/forgot/forgot.component';
 import { ResetComponent } from './pages/reset/reset.component';
 import { EquipesComponent } from './pages/equipes/equipes.component';
 import { MembresComponent } from './pages/membres/membres.component';
 import { InvitationComponent } from './pages/invitation/invitation.component';
+import { CampagnesComponent } from './pages/campagnes/campagnes.component';
+import { BannersComponent } from './pages/banners/banners.component';
+import { BannerComponent } from './pages/banner/banner.component';
+import { UploadComponent } from './pages/upload/upload.component';
+import { DesignComponent } from './pages/design/design.component';
+import {AuthInterceptor} from './interceptors/auth.interceptor';
+
+import { ReactiveFormsModule } from '@angular/forms';
+import { ColorPickerModule } from 'ngx-color-picker';
+import { MatRippleModule } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { ClipboardModule } from 'ngx-clipboard';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialFileInputModule } from 'ngx-material-file-input';
 
 @NgModule({
   declarations: [
@@ -92,16 +116,44 @@ import { InvitationComponent } from './pages/invitation/invitation.component';
     ResetComponent,
     EquipesComponent,
     MembresComponent,
-    InvitationComponent
+    InvitationComponent,
+    CampagnesComponent,
+    BannersComponent,
+    BannerComponent,
+    UploadComponent,
+    DesignComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     RouterModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ColorPickerModule,
+    ClipboardModule,
+    DragDropModule,
+    BrowserAnimationsModule,
+    MatRippleModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatButtonModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatCheckboxModule,
+    MatSliderModule,
+    MatGridListModule,
+    MatButtonToggleModule,
+    ReactiveFormsModule,
+    MaterialFileInputModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

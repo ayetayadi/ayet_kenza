@@ -1,8 +1,4 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthadminService } from 'src/app/services/authadmin.service';
-import { AuthannonceurService } from 'src/app/services/authannonceur.service';
 import { SharedService } from 'src/app/services/shared.service';
 
 @Component({

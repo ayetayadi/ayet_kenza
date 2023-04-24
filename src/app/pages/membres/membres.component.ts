@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AuthannonceurService } from 'src/app/services/authannonceur.service';
+import { TeamService } from 'src/app/services/team.service';
 
 @Component({
   selector: 'app-membres',
@@ -18,7 +18,7 @@ export class MembresComponent implements OnInit {
   message: string = '';
 
   constructor(private route: ActivatedRoute,
-    private auth2: AuthannonceurService) {
+    private teamService: TeamService) {
   }
 
   ngOnInit(): void {
@@ -28,7 +28,7 @@ export class MembresComponent implements OnInit {
   }
 
   getMembers(): void {
-    this.auth2.getMembersByTeam(this.teamName).subscribe(
+    this.teamService.getMembersByTeam(this.teamName).subscribe(
       data => {
         this.membres = data;
         console.log(`Found ${data.length} members for team "${this.teamName}"`);
@@ -60,7 +60,7 @@ export class MembresComponent implements OnInit {
   }
   
   invite() {
-    this.auth2.sendInvitation(this.email, this.teamName)
+    this.teamService.sendInvitation(this.email, this.teamName)
       .subscribe( response => {
         console.log(`Email de l'annonceur: `+this.email)
         this.message = response.message;
@@ -73,7 +73,7 @@ export class MembresComponent implements OnInit {
 
   deleteMember(email: string, teamName: string) {
     if (confirm(`Êtes-vous sûr de vouloir supprimer ${this.teamName} ?`)) {
-      this.auth2.deleteMember(email, teamName)
+      this.teamService.deleteMember(email, teamName)
         .subscribe
           (response => {
             console.log('Team deleted successfully');

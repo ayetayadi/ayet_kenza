@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthannonceurService } from 'src/app/services/authannonceur.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { SharedService } from 'src/app/services/shared.service';
 
 
 @Component({
@@ -14,20 +15,21 @@ export class ForgotComponent implements OnInit {
   message: string ='';
  
 
-  constructor(private auth2: AuthannonceurService) { }
+  constructor(private auth: SharedService, private authService: AuthService) { }
 
   ngOnInit(): void {
   }
 
  envoyer() {
-    this.auth2.forgotPassword(this.email).subscribe(
+    
+    this.authService.forgotPassword(this.email).subscribe(
       (response: any) => {
-        console.log(`Email de l'annonceur: `+this.email)
+        console.log(+this.email)
         this.message = response.message;
       },
       (error) => {
         console.error(error);
-        this.message = 'An error occurred while sending the email.';
+        this.message = `Une erreur s'est produite lors de l'envoi de l'email.`;
       }
     );
   }

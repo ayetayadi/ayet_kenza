@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthannonceurService } from 'src/app/services/authannonceur.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-reset',
@@ -16,7 +16,7 @@ export class ResetComponent implements OnInit {
   message: string ='';
 
 
-  constructor(private auth2: AuthannonceurService, private router: ActivatedRoute, private _router:Router) {
+  constructor(private authService: AuthService, private router: ActivatedRoute, private _router:Router) {
     this.router.queryParams.subscribe(params => {
       this.passwordResetToken = params['passwordResetToken'];
     });
@@ -25,7 +25,7 @@ export class ResetComponent implements OnInit {
   ngOnInit(): void {
   }
   resetPassword(){
-    this.auth2.resetPassword(this.passwordResetToken, this.password, this.confirmPassword).subscribe(
+    this.authService.resetPassword(this.passwordResetToken, this.password, this.confirmPassword).subscribe(
       (data: any) => {
         console.log(this.passwordResetToken);
         console.log(this.password);

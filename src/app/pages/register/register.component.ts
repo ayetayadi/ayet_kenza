@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthannonceurService } from 'src/app/services/authannonceur.service'
 import { Router } from '@angular/router';
 import { SharedService } from 'src/app/services/shared.service'
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -24,13 +24,13 @@ export class RegisterComponent implements OnInit {
   }
 
   token: any;
-  constructor(private auth: AuthannonceurService,private shared: SharedService ,private router: Router) { }
+  constructor(private authService: AuthService,private shared: SharedService ,private router: Router) { }
 
   ngOnInit(): void {
   }
 
   register() {
-    this.auth.register(this.annonceur)
+    this.authService.registerAnnonceur(this.annonceur)
     .subscribe(
       res => {
         this.token = res

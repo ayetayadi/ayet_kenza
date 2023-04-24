@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthadminService } from 'src/app/services/authadmin.service';
-import { AuthannonceurService } from 'src/app/services/authannonceur.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
@@ -34,13 +33,16 @@ export class LoginComponent implements OnInit {
 
 
   isAdminLoggedIn: boolean = false;
+  isAnnonceurLoggedIn: boolean = false;
 
   email: string = "";
   password: string = "";
   emailValid: boolean = true;
   passwordValid: boolean = true;
 
-  constructor(private shared: SharedService, private auth1: AuthadminService, private auth2: AuthannonceurService, private router: Router) {
+  message: string = "";
+
+  constructor(private shared: SharedService, private authService: AuthService, private router: Router) {
 
   }
 
@@ -51,20 +53,20 @@ export class LoginComponent implements OnInit {
   token: any;
 
   login() {
-    this.auth1.login(this.admin).subscribe(
+    this.authService.loginAdmin(this.admin).subscribe(
       res => {
         this.token = res;
         const emailAdmin = this.admin.email;
         console.log(`Email de l'admin current: ` + emailAdmin)
-        localStorage.setItem('token', this.token)
+        localStorage.setItem('token1', this.token)
         console.log(`token1: ` + this.token)
         console.log(this.token)
-        alert('Admin connecté!!')
         this.shared.setAdminToken(this.token);
         console.log(this.shared.getAdminToken())
         console.log('Navigation to dashboard route successful!');
         this.router.navigate(['/dashboard']);
         this.isAdminLoggedIn = true;
+        checkLoginStatus();
 
       },
       err => {
@@ -72,7 +74,7 @@ export class LoginComponent implements OnInit {
       }
     )
 
-    this.auth2.login(this.annonceur).subscribe(
+    this.authService.loginAnnonceur(this.annonceur).subscribe(
       res => {
         this.token = res;
         const usernameAnn = this.annonceur.username;
@@ -89,19 +91,32 @@ export class LoginComponent implements OnInit {
         console.log(`Nom de l'entreprise de l'annonceur current: ` + domaineE)
         const adresseE = this.annonceur.adressE;
         console.log(`Nom de l'entreprise de l'annonceur current: ` + adresseE)
-        localStorage.setItem('token2', this.token)
-        alert('Annonceur connecté!!')
+        localStorage.setItem('token2', this.token);
+        console.log(`token2: ` +this.token);
         this.shared.setAnnonceurToken(this.token);
-        console.log(this.token)
         console.log(this.shared.getAnnonceurToken())
         this.router.navigate(['/dashboard']);
-        this.isAdminLoggedIn = false;
+        
+        this.isAnnonceurLoggedIn = true;
+        checkLoginStatus();
 
       },
       err => {
         console.log(err);
       }
-    )
+    );
+    
+    const checkLoginStatus = () => {
+      if (this.isAdminLoggedIn) {
+        alert('Login Admin successful!');
+        this.router.navigate(['/dashboard']);
+      }
+        else if (this.isAnnonceurLoggedIn){
+        alert('Login Annonceur successful!');
+        this.router.navigate(['/dashboard']);
+        return;
+      }
+    }
   }
 
   onSubmit() {

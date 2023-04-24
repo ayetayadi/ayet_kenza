@@ -1,9 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common'
-import { AuthannonceurService } from 'src/app/services/authannonceur.service';
 import { Router } from '@angular/router';
-import { AuthadminService } from 'src/app/services/authadmin.service';
 import { SharedService } from 'src/app/services/shared.service';
+import { AccountService } from 'src/app/services/account.service';
 
 @Component({
   selector: 'app-header',
@@ -16,8 +15,8 @@ export class HeaderComponent implements OnInit {
     
   username: string = '';
 
-  constructor(@Inject(DOCUMENT) private document: Document, public auth2: AuthannonceurService, private router: Router,  private auth1: AuthadminService, private shared: SharedService) { 
-    this.auth2.getAnnonceur().subscribe(
+  constructor(@Inject(DOCUMENT) private document: Document, public accountService: AccountService, private router: Router, private shared: SharedService) { 
+    this.accountService.getAnnonceur().subscribe(
       (response: any) => {
         console.log(response)
         this.username = response.username;

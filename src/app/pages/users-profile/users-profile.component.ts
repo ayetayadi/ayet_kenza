@@ -1,8 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthannonceurService } from 'src/app/services/authannonceur.service';
-import { SharedService } from 'src/app/services/shared.service';
+import { AccountService } from 'src/app/services/account.service';
+
 
 @Component({
   selector: 'app-users-profile',
@@ -43,9 +42,9 @@ export class UsersProfileComponent implements OnInit {
   
   errorMessage: string = '';
 
-  constructor(private auth2: AuthannonceurService, private router: Router) {
+  constructor(private accountService: AccountService, private router: Router) {
 
-   this.auth2.getAnnonceur().subscribe(
+   this.accountService.getAnnonceur().subscribe(
       (response: any) => {
         console.log(response)
         this.id = response.id;
@@ -80,7 +79,7 @@ export class UsersProfileComponent implements OnInit {
    }
 
   changePassword() {
-    this.auth2.changePassword(this.annonceur.oldPassword, this.annonceur.newPassword, this.annonceur.email).subscribe(
+    this.accountService.changePassword(this.annonceur.oldPassword, this.annonceur.newPassword, this.annonceur.email).subscribe(
       (res) => {
         console.log(res);
         const oldPassword = this.annonceur.oldPassword;
@@ -96,7 +95,7 @@ export class UsersProfileComponent implements OnInit {
   }
 
   updateProfile(){
-    this.auth2.updateAnnonceur(this.id, this.username, this.email, this.dateNaiss, this.tel, this.nomE, this.emailE,this.telE, this.domaineE, this.adresseE)
+    this.accountService.updateAnnonceur(this.id, this.username, this.email, this.dateNaiss, this.tel, this.nomE, this.emailE,this.telE, this.domaineE, this.adresseE)
     .subscribe({
       next: () => {
         const username = this.username;

@@ -1,0 +1,185 @@
+<main id="main" class="main">
+   <div class="pagetitle">
+      <h1>Bannière publicitaire</h1>
+      <nav>
+         <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="/bannières">Bannières</a></li>
+            <li class="breadcrumb-item active">Bannière</li>
+         </ol>
+      </nav>
+   </div>
+   <section class="section banner" (ngSubmit)="getBanner()">
+      <div class="row">
+         <div class="col-xl-4">
+            <div class="card">
+               <div class="card-body banner-card pt-4 d-flex flex-column align-items-center">
+                  <h2>{{nom}}</h2>
+                  <img [src]="'data:image/jpeg;base64,' + image" alt="..." class="d-block w-100">
+                  <div class="pt-2" data-bs-target="#banner_edit">
+                     <a href="#" class="btn btn-primary btn-sm" title="Upload new banner image">
+                        <i class="bi bi-upload"></i></a> <a href="#" class="btn btn-danger btn-sm"
+                        title="Remove my banner">
+                        <i class="bi bi-trash"></i></a>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-xl-8">
+            <div class="card">
+               <div class="card-body pt-3">
+                  <ul class="nav nav-tabs nav-tabs-bordered">
+                     <li class="nav-item"> <button class="nav-link active" data-bs-toggle="tab"
+                           data-bs-target="#banner-overview">Détails de la bannière</button></li>
+                     <li class="nav-item"> <button class="nav-link" data-bs-toggle="tab"
+                           data-bs-target="#banner_edit">Editer votre Bannière</button></li>
+                  </ul>
+                  <div class="tab-content pt-2">
+                     <div class="tab-pane fade show active banner-overview" id="banner-overview">
+                        <h5 class="card-title">Détails de Bannière</h5>
+                        <div class="tab-pane fade show active banner-overview" id="banner-overview">
+                           <form>
+                              <div class="row mb-3">
+                                 <label for="nom_campagne" class="col-md-4 col-lg-3 col-form-label">Nom de la
+                                    campagne</label>
+                                 <div class="col-md-8 col-lg-9">
+                                    <input name="nom_campagne" type="text" class="form-control" id="nom_campagne"
+                                       [(ngModel)]="nom_campagne" readonly>
+                                 </div>
+                              </div>
+
+                              <div class="row mb-3">
+                                 <label for="nom" class="col-md-4 col-lg-3 col-form-label">Nom de la bannière</label>
+                                 <div class="col-md-8 col-lg-9">
+                                    <input name="nom" type="text" class="form-control" id="nom" [(ngModel)]="nom"
+                                       readonly>
+                                 </div>
+                              </div>
+
+                              <div class="row mb-3">
+                                 <label for="title" class="col-md-4 col-lg-3 col-form-label">Titre</label>
+                                 <div class="col-md-8 col-lg-9">
+                                    <input name="title" type="text" class="form-control" id="title" [(ngModel)]="title"
+                                       readonly>
+                                 </div>
+                              </div>
+
+                              <div class="row mb-3">
+                                 <label for="subtitle" class="col-md-4 col-lg-3 col-form-label">Sous-titre</label>
+                                 <div class="col-md-8 col-lg-9">
+                                    <input name="subtitle" type="text" class="form-control" id="subtitle"
+                                       [(ngModel)]="subtitle" readonly>
+                                 </div>
+                              </div>
+
+                              <div class="row mb-3">
+                                 <label for="description" class="col-md-4 col-lg-3 col-form-label">Description</label>
+                                 <div class="col-md-8 col-lg-9">
+                                    <input name="description" type="text" class="form-control" id="description"
+                                       [(ngModel)]="description" readonly>
+                                 </div>
+                              </div>
+
+
+                              <div class="row mb-3">
+                                 <label for="createdAt" class="col-md-4 col-lg-3 col-form-label">Date de début</label>
+                                 <div class="col-md-8 col-lg-9">
+                                    <input name="createdAt" type="text" class="form-control" id="createdAt"
+                                       [(ngModel)]="createdAt" readonly>
+                                 </div>
+                              </div>
+
+                              <div class="row mb-3">
+                                 <label for="height" class="col-md-4 col-lg-3 col-form-label">Hauteur</label>
+                                 <div class="col-md-8 col-lg-9">
+                                    <input name="height" type="text" class="form-control" id="height"
+                                       [(ngModel)]="height" readonly>
+                                 </div>
+                              </div>
+
+                              <div class="row mb-3">
+                                 <label for="width" class="col-md-4 col-lg-3 col-form-label">Largeur</label>
+                                 <div class="col-md-8 col-lg-9">
+                                    <input name="width" type="text" class="form-control" id="width" [(ngModel)]="width"
+                                       readonly>
+                                 </div>
+                              </div>
+
+                              <div class="row mb-3">
+                                 <label for="htmlcode" class="col-md-4 col-lg-3 col-form-label">Code HTML</label>
+                                 <div class="col-md-8 col-lg-9 input group">
+                                    <div class="input-group">
+                                       <input name="htmlcode" type="textarea" id="htmlcode" [(ngModel)]="htmlcode"
+                                          readonly class="form-control">
+                                       <button class="btn btn-outline-secondary" id="htmlcode" type="button"
+                                          (click)="copyToClipboard()" title="Copy to clipboard">
+                                          <i class="bi bi-clipboard"></i>
+                                       </button>
+                                    </div>
+                                 </div>
+                              </div>
+
+                           </form>
+                        </div>
+                     </div>
+
+
+                     <div class="tab-pane fade banner-edit pt-3" id="banner_edit">
+                        <form>
+                           <div class="row mb-3">
+                              <label for="nom_campagne" class="col-md-4 col-lg-3 col-form-label">Nom de la
+                                 campagne</label>
+                              <div class="col-md-8 col-lg-9">
+                                 <input name="nom_campagne" type="text" class="form-control" id="nom_campagne"
+                                    [(ngModel)]="nom_campagne">
+                              </div>
+                           </div>
+
+                           <div class="row mb-3">
+                              <label for="nom" class="col-md-4 col-lg-3 col-form-label">Nom de la bannière</label>
+                              <div class="col-md-8 col-lg-9">
+                                 <input name="nom" type="text" class="form-control" id="nom" [(ngModel)]="nom">
+                              </div>
+                           </div>
+
+                           <div class="row mb-3">
+                              <label for="title" class="col-md-4 col-lg-3 col-form-label">Titre</label>
+                              <div class="col-md-8 col-lg-9">
+                                 <input name="title" type="text" class="form-control" id="title" [(ngModel)]="title">
+                              </div>
+                           </div>
+
+                           <div class="row mb-3">
+                              <label for="subtitle" class="col-md-4 col-lg-3 col-form-label">Sous-titre</label>
+                              <div class="col-md-8 col-lg-9">
+                                 <input name="subtitle" type="text" class="form-control" id="subtitle"
+                                    [(ngModel)]="subtitle">
+                              </div>
+                           </div>
+
+                           <div class="row mb-3">
+                              <label for="description" class="col-md-4 col-lg-3 col-form-label">Description</label>
+                              <div class="col-md-8 col-lg-9">
+                                 <input name="description" type="text" class="form-control" id="description"
+                                    [(ngModel)]="description">
+                              </div>
+                           </div>
+
+
+                           <div class="row mb-3">
+                              <label for="createdAt" class="col-md-4 col-lg-3 col-form-label">Date de début</label>
+                              <div class="col-md-8 col-lg-9">
+                                 <input name="createdAt" type="text" class="form-control" id="createdAt"
+                                    [(ngModel)]="createdAt">
+                              </div>
+                           </div>
+
+
+                        </form>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+</main>

@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
-import { AuthadminService } from 'src/app/services/authadmin.service';
-import { AuthannonceurService } from 'src/app/services/authannonceur.service';
+import { AccountService } from 'src/app/services/account.service';
 import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
@@ -33,10 +32,10 @@ export class AnnonceursComponent implements OnInit {
   message: string = '';
 
 
-  constructor(private http: HttpClient, private elementRef: ElementRef, public shared: SharedService, public auth1: AuthadminService, private auth2: AuthannonceurService) { }
+  constructor(private http: HttpClient, private elementRef: ElementRef, public shared: SharedService, public account: AccountService) { }
 
   ngOnInit(): void {
-    this.auth1.getAnnonceurs().subscribe((data: any[]) => {
+    this.account.getAnnonceurs().subscribe((data: any[]) => {
       console.log(data);
       this.annonceurs = data;
     }, error => {
@@ -58,7 +57,7 @@ export class AnnonceursComponent implements OnInit {
   deleteAnnonceur(email: string) {
     if (window.confirm(`Are you sure you want to delete this annonceur with email ${email}?`)) {
       console.log("Deleting annonceur with email:", email);
-      this.auth1.deleteAnnonceur(email).subscribe(
+      this.account.deleteAnnonceur(email).subscribe(
         () => {
           console.log(`Annonceur avec email ${email} supprimé`);
           this.message = `Annonceur avec email ${email} supprimé`;
@@ -70,6 +69,40 @@ export class AnnonceursComponent implements OnInit {
       );
     }
   }
+
+  //Get that email from the column of the annonceurs when you click on button Modifier
+  getEmail(emailA: string): string {
+    console.log(emailA);
+    this.emailA = emailA;
+    return emailA;
+  }
+
+  //Retrieve that email and console it
+  useEmail() {
+    console.log(this.getEmail(this.emailA));
+  }
+
+  editAnnonceur(): void {
+    console.log(this.getEmail(this.emailA));
+    this.account.editAnnonceur(this.getEmail(this.emailA), this.username, this.email, this.tel, this.nomE, this.emailE, this.domaineE, this.adresseE).subscribe(
+      () => {
+        console.log('Annonceur mis à jour avec succès');
+      },
+      error => {
+        console.log('Erreur lors de la mise à jour:', error);
+      }
+    );
+  }
+
+
+  createAnnonceur(): void {
+    this.account.createAnnonceur(this.username, this.email, this.password)
+      .subscribe(
+        (result) => alert('Annonceur ajouté avec succès!'),
+        error => console.error(error)
+      );
+  }
+
 
   getPaginatedAnnonceurs() {
     const start = (this.currentPage - 1) * this.itemsPerPage;
@@ -97,49 +130,6 @@ export class AnnonceursComponent implements OnInit {
 
   getTotalPages() {
     return Math.ceil(this.annonceurs.length / this.itemsPerPage);
-  }
-
-
-//Get that email from the column of the annonceurs when you click on button Modifier
-  getEmail(emailA: string): string {
-    console.log(emailA);
-    this.emailA = emailA;
-    return emailA;
-  }
-
-  //Retrieve that email and console it
-  useEmail() {
-    console.log(this.getEmail(this.emailA));
-  }
-
-  editAnnonceur(): void {
-    console.log(this.getEmail(this.emailA));
-    this.http.put(`http://localhost:3000/admin/editAnnonceur/${this.getEmail(this.emailA)}`, {
-      username: this.username,
-      email: this.email,
-      tel: this.tel,
-      nomE: this.nomE,
-      emailE: this.emailE,
-      domaineE: this.domaineE,
-      adresseE: this.adresseE
-    }).subscribe(
-      () => {
-        console.log('Annonceur mis à jour avec succès');
-      },
-      error => {
-        console.log('Erreur lors de la mise à jour:', error);
-      }
-    );
-  }
-
-
-
-  createAnnonceur(): void {
-    this.http.post('http://localhost:3000/admin/addAnnonceur/', { username: this.username, email: this.email, password: this.password })
-      .subscribe(
-        (result) => alert('Annonceur ajouté avec succès!'),
-        error => console.error(error)
-      );
   }
 }
 

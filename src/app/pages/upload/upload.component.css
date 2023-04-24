@@ -1,0 +1,61 @@
+
+#main form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+#main form input[type="text"],
+#main form input[type="textarea"],
+#main form input[type="file"] {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+#main form input[type="file"] {
+    margin-bottom: 16px;
+}
+
+#main form button[type="submit"] {
+    background-color: #9155FD;
+    border: 0.05px;
+    color: white;
+    padding: 12px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#main form button[type="submit"]:hover {
+    background-color: rgb(167, 158, 215);
+}
+
+#main form input[type="text"]::placeholder,
+#main form input[type="textarea"]::placeholder {
+    color: #aaa;
+}
+
+#main form input[type="file"]::-webkit-file-upload-button {
+    background-color: #9155FD;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.wrapper {
+    width: 600px;
+    padding: 40px 30px 50px 30px;
+    background: #fff;
+    border-radius: 5px;
+    text-align: center;
+    box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+}

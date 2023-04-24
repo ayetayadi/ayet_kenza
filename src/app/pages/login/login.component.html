@@ -19,7 +19,7 @@
                 <p class="MuiTypography-root MuiTypography-body2 css-4yvesp">Veuillez vous connecter à votre compte et
                     commencez l'aventure!</p>
             </div>
-            <div class="field email" [class.error]="emailValid">
+            <div class="field email" >
                 <div class="input-area">
                     <input [(ngModel)]="annonceur.email" [(ngModel)]="admin.email" name="email" type="text"
                         placeholder="Adresse Email">
@@ -28,7 +28,7 @@
                 </div>
                 <div class="error error-txt" *ngIf="!emailValid">Email ne peut pas être vide</div>
             </div>
-            <div class="field password" [class.error]="passwordValid">
+            <div class="field password" >
                 <div class="input-area">
                     <input [(ngModel)]="annonceur.password" [(ngModel)]="admin.password" name="password" type="password"
                         placeholder="Password">
@@ -39,6 +39,7 @@
             </div>
             <div class="pass-txt"><a [routerLink]="['/forgotPassword']">Mot de Passe oublié?</a></div>
 
+            <div class="ui error message ng-binding ng-scope" ng-if="messages.error" ng-bind-html="messages.error" ng-click="messages.error = null">{{ message }}</div>
 
             <input (click)="login()" type="submit" value="Se connecter">
         </form>

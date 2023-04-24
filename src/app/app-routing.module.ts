@@ -38,6 +38,11 @@ import { ForgotComponent } from './pages/forgot/forgot.component';
 import { EquipesComponent } from './pages/equipes/equipes.component';
 import { MembresComponent } from './pages/membres/membres.component';
 import { InvitationComponent } from './pages/invitation/invitation.component';
+import { CampagnesComponent } from './pages/campagnes/campagnes.component';
+import { BannersComponent } from './pages/banners/banners.component';
+import { BannerComponent } from './pages/banner/banner.component';
+import { UploadComponent } from './pages/upload/upload.component';
+import { DesignComponent } from './pages/design/design.component';
 
 
 const routes: Routes = [
@@ -50,6 +55,11 @@ const routes: Routes = [
   { path: 'equipes', component: EquipesComponent },
   { path: 'equipes/:nom/membres', component: MembresComponent },
   { path: 'invitation', component: InvitationComponent },
+  { path: 'campagnes', component: CampagnesComponent },
+  { path: 'bannières/:nom_campagne', component: BannersComponent },
+  { path: 'banner/:id', component: BannerComponent },
+  { path: 'téléchargerBannière', component: UploadComponent },
+  { path: 'design', component: DesignComponent },
   { path: 'alerts', component: AlertsComponent },
   { path: 'accordion', component: AccordionComponent },
   { path: 'badges', component: BadgesComponent },

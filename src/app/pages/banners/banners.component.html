@@ -1,0 +1,75 @@
+<main id="main" class="main">
+  <div class="container">
+    <h3>Liste des bannières de chaque campagne publicitaire</h3>
+    <div class="pagetitle" style="padding-bottom: 40px;">
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a routerLink="/">Accueil</a></li>
+          <li class="breadcrumb-item active">Bannières</li>
+        </ol>
+      </nav>
+    </div>
+    <div>
+      <input class="input1" type="text" [(ngModel)]="searchText" placeholder="Chercher votre bannière">
+      <button class="button1" data-bs-toggle="modal" data-bs-target="#largeModal">Créer une bannière</button>
+      <div class="row align-items-top">
+        <div class="card" *ngFor="let banner of getPaginatedBanners(); let i = index">
+          <div class="card-body">
+            <h5 class="card-title">{{ banner.nom }}</h5>
+            <img class="image" [src]="'data:image/jpeg;base64,' + banner.image" class="d-block w-100" alt="..." (click)="onCarouselClick(banner.id)"/>
+          </div>
+        </div>
+      </div>
+      
+
+
+      <div class="pagination">
+        <button [disabled]="currentPage === 1" (click)="currentPage = currentPage - 1">Précédente</button>
+        <button *ngFor="let page of getPaginationArray()" [class.active]="currentPage === page"
+          (click)="currentPage = page">{{ page }}</button>
+        <button [disabled]="currentPage === getTotalPages()" (click)="currentPage = currentPage + 1">Suivante</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<form>
+  <div class="modal fade" id="largeModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" >Faites un choix🤩</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+            fdprocessedid="rus26i"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-6" (click)="navigateToUpload()">
+              <div class="card mb-1" style="margin-left: 55px;">
+
+                <div class="card-body">
+                  <img src="assets/img/image3.png" alt="..." class="d-block w-100">
+                </div>
+                <div class="card-footer">
+                  <button data-bs-dismiss="modal" class="button2">Télécharger une bannière</button> 
+                </div>
+              </div>
+            </div>
+
+
+            <div class="col-md-6" (click)="navigateToDesign()">
+              <div class="card mb-12">
+                <div class="card-body">
+                  <img src="assets/img/image2.png" alt="..." class="d-block w-100">
+                </div>
+                <div class="card-footer">
+                  <button class="button2" data-bs-dismiss="modal">Concevoir une bannière</button> 
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

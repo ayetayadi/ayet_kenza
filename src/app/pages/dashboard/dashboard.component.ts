@@ -1,4 +1,6 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,7 +9,14 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor(private elementRef: ElementRef) { }
+  constructor(private elementRef: ElementRef, private authService: AuthService, private router: Router) {
+    if (this.authService.isAnnonceurLoggedIn() != false) {
+      this.router.navigate(['/dashboard']);
+    }
+    else if (this.authService.isAdminLoggedIn() != false) {
+      this.router.navigate(['/dashboard']);
+    }
+   }
 
   ngOnInit(): void {
 

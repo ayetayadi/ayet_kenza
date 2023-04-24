@@ -13,6 +13,18 @@ export class SharedService {
     this.token = "";
   }
 
+  forgotPassword(email: string) {
+    return this.http.post('http://localhost:3000/forgotPassword', { email: email });
+  }
+
+
+  resetPassword(passwordResetToken: string, password: string, confirmPassword: string) {
+    const body = { password, confirmPassword };
+    const url = `http://localhost:3000/resetPassword?passwordResetToken=${passwordResetToken}`;
+    return this.http.post(url, body);
+  }
+
+  
   setAdminToken(token: string) {
     this.token = token;
   }

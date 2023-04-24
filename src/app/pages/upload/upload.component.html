@@ -1,0 +1,13 @@
+<main id="main">
+    <div class="wrapper">
+    <form #form (ngSubmit)="onSubmit(form)" enctype="multipart/form-data">
+        <h5 class="MuiTypography-root MuiTypography-h5 css-vsfzib">Créez votre bannière! 💡</h5>
+        <input type="text" name="nom" placeholder="Nom de la bannière">
+        <input type="textarea" name="description" placeholder="Description">
+        <input type="text" name="title" placeholder="Title">
+        <input type="text" name="subtitle" placeholder="Sous-titre">
+        <input type="file" name="image">
+        <button type="submit">Enregister la bannière</button>
+      </form>
+    </div>
+</main>

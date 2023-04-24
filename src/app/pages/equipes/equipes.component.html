@@ -8,42 +8,47 @@
             </ol>
         </nav>
     </div>
-    <button class="btn" type="button" data-bs-toggle="modal" data-bs-target="#basicModal1"><i class="fa fa-plus"></i>
-        Créer une équipe</button>
-    <section class="section">
-        <div class="row align-items-top">
-            <div class="col-lg-0.5"></div>
-            <div *ngIf="equipes.length > 0; else noTeams" class="col-lg-12 d-flex flex-wrap">
-                <div class="col-lg-3" *ngFor="let equipe of equipes">
-                    <div class="card mb-5">
-                        <img src="assets/img/teams_image.jpeg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h2 class="card-title">
-                                <a routerLink="/equipes/{{ equipe.nom }}/membres">{{ equipe.nom }}</a>
-                            </h2>
-                            <div class="cardb">
-                                <button class="card-btn" type="button" data-bs-toggle="modal"
-                                    data-bs-target="#basicModal3" (click)="selectedEquipe = equipe"><i
-                                    class="fa fa-plus"></i></button>
-                                <button class="card-btn btn1" (click)="deleteTeam(equipe)"><i
-                                        class="fa fa-trash"></i></button>
-                                <button class="card-btn btn2" type="button" data-bs-toggle="modal"
-                                    data-bs-target="#basicModal2" (click)="selectedEquipe = equipe"><i
-                                        class="fa fa-edit"></i></button>
+    <div *ngIf="equipes.length > 0; else noTeams">
+        <button class="btn" type="button" data-bs-toggle="modal" data-bs-target="#basicModal1"><i
+                class="fa fa-plus"></i>
+            Créer une équipe</button>
+        <section class="section">
+            <div class="row align-items-top">
+                <div class="col-lg-0.5"></div>
+                <div class="col-lg-12 d-flex flex-wrap">
+                    <div class="col-lg-3" *ngFor="let equipe of equipes">
+                        <div class="card mb-5">
+                            <img src="assets/img/teams_image.jpeg" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h2 class="card-title">
+                                    <a routerLink="/equipes/{{ equipe.nom }}/membres">{{ equipe.nom }}</a>
+                                </h2>
+                                <div class="cardb">
+                                    <button class="card-btn" type="button" data-bs-toggle="modal"
+                                        data-bs-target="#basicModal3" (click)="selectedEquipe = equipe"><i
+                                            class="fa fa-plus"></i></button>
+                                    <button class="card-btn btn1" (click)="deleteTeam(equipe)"><i
+                                            class="fa fa-trash"></i></button>
+                                    <button class="card-btn btn2" type="button" data-bs-toggle="modal"
+                                        data-bs-target="#basicModal2" (click)="selectedEquipe = equipe"><i
+                                            class="fa fa-edit"></i></button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
-            <ng-template #noTeams>
-                <section class="section min-vh-100 d-flex flex-column align-items-center justify-content-center">
-                    <div class="col-lg-4">
-                        <h2>Aucune équipe trouvée</h2>
-                    </div>
-                </section>
-            </ng-template>
-        </div>
-    </section>
+        </section>
+    </div>
+    <ng-template #noTeams>
+        <section class="section min-vh-100 d-flex flex-column align-items-center justify-content-center">
+            <div class="col-lg-5">
+                <h2>Aucune équipe trouvée 👥</h2>
+                <button class="btn3" type="button" data-bs-toggle="modal" data-bs-target="#basicModal1"><i class="fa fa-plus"></i> Créer une équipe</button>
+            </div>
+        </section>
+    </ng-template>
 </main>
 
 
