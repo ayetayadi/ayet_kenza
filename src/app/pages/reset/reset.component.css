@@ -22,6 +22,22 @@ body {
     background: rgb(198, 190, 238);
 }
 
+
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    margin-right: 10px;
+}
+
+
 .wrapper {
     width: 380px;
     padding: 40px 30px 50px 30px;
@@ -29,6 +45,14 @@ body {
     border-radius: 5px;
     text-align: center;
     box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+.wrapper .logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-left: 20px;
 }
 
 .css-1cb7fve {

@@ -3,19 +3,29 @@ import { DOCUMENT } from '@angular/common'
 import { Router } from '@angular/router';
 import { SharedService } from 'src/app/services/shared.service';
 import { AccountService } from 'src/app/services/account.service';
-
+import { AuthService } from 'src/app/services/auth.service';
+import { AuthannonceurInterceptor } from '../../interceptors/authannonceur.interceptor';
+import { AuthadminInterceptor } from '../../interceptors/authadmin.interceptor';
+import { concatMap, delay } from 'rxjs';
+import { AuthmembreInterceptor } from 'src/app/interceptors/authmembre.interceptor';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  
+
   role: string = '';
-    
+
   username: string = '';
 
-  constructor(@Inject(DOCUMENT) private document: Document, public accountService: AccountService, private router: Router, private shared: SharedService) { 
+
+  isAdminLoggedIn: boolean = false;
+  isAnnonceurLoggedIn: boolean = false;
+  isMembreLoggedIn: boolean = false;
+  cookieService: any;
+
+  constructor(@Inject(DOCUMENT) private document: Document, public authService: AuthService, public accountService: AccountService, private router: Router, private shared: SharedService) {
     this.accountService.getAnnonceur().subscribe(
       (response: any) => {
         console.log(response)
@@ -25,7 +35,7 @@ export class HeaderComponent implements OnInit {
       (error: any) => {
         console.log(error);
       }
-    ); 
+    );
   }
 
   ngOnInit(): void {
@@ -41,10 +51,11 @@ export class HeaderComponent implements OnInit {
     console.log(annonceurToken);
 
 
-    const token = adminToken || annonceurToken; // get the token from somewhere
-    this.shared.verifyToken(token).subscribe(
+    const token = this.shared.getAdminToken() || this.shared.getAnnonceurToken() ;
+    this.accountService.verifyRole(token).subscribe(
       response => {
         this.role = response.role;
+        console.log(this.role);
       },
       error => {
         console.log(error);
@@ -52,14 +63,42 @@ export class HeaderComponent implements OnInit {
     );
 
   }
-  sidebarToggle()
-  {
+  sidebarToggle() {
     this.document.body.classList.toggle('toggle-sidebar');
   }
 
-  logout(){
-    localStorage.removeItem('token');
-    alert("Vous etes déconnecté(e)");
-    this.router.navigate(['/login']);
+  logout() {
+    this.authService.logoutAdmin().pipe(
+      delay(1000),
+      concatMap(() => {
+        AuthadminInterceptor.accessToken = '';
+        this.isAdminLoggedIn = false;
+        return this.authService.logoutAnnonceur();
+      })
+    ).subscribe(
+      () => {
+        AuthannonceurInterceptor.accessToken = '';
+        this.isAnnonceurLoggedIn = false;
+        this.checkLoginStatus();
+        this.router.navigate(['/login'], { skipLocationChange: true, replaceUrl: true });
+      },
+      () => {
+        if (this.cookieService.get('memberToken')) {
+          this.authService.logoutMember();
+          AuthmembreInterceptor.membreToken = '';
+          this.isMembreLoggedIn = false;
+          this.checkLoginStatus();
+          this.router.navigate(['/invitation'], { skipLocationChange: true, replaceUrl: true });
+        }
+      }
+    );
   }
+  
+  checkLoginStatus() {
+    alert('Logout successful!');
+  }
+  
+
+  
+
 }

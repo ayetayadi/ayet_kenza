@@ -43,23 +43,50 @@ import { BannersComponent } from './pages/banners/banners.component';
 import { BannerComponent } from './pages/banner/banner.component';
 import { UploadComponent } from './pages/upload/upload.component';
 import { DesignComponent } from './pages/design/design.component';
+import { TeamsadminComponent } from './pages/teamsadmin/teamsadmin.component';
+import { CampagnesadminComponent } from './pages/campagnesadmin/campagnesadmin.component';
+import { AllbannersComponent } from './pages/allbanners/allbanners.component';
+import { AutorisationsComponent } from './pages/autorisations/autorisations.component';
+import { OffresComponent } from './pages/offres/offres.component';
+import { PaiementComponent } from './pages/paiement/paiement.component';
+import { OffresadminComponent } from './pages/offresadmin/offresadmin.component';
+import { RapportComponent } from './pages/rapport/rapport.component';
+import { AnhomeComponent } from './pages/anhome/anhome.component';
+import { AdhomeComponent } from './pages/adhome/adhome.component';
+import { AnnonceurscampagnesComponent } from './pages/annonceurscampagnes/annonceurscampagnes.component';
+import { AnnonceursteamsComponent } from './pages/annonceursteams/annonceursteams.component';
+import { MembresadminComponent } from './pages/membresadmin/membresadmin.component';
 
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
+  { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'resetPassword', component: ResetComponent },
+  { path: 'acceuilannonceur', component: AnhomeComponent },
+  { path: 'acceuiladmin', component: AdhomeComponent },
   { path: 'forgotPassword', component: ForgotComponent },
   { path: 'dashboard', component: DashboardComponent },
+  { path: 'rapport/:nom_campagne/:nom_banner', component: RapportComponent },
   { path: 'annonceurs', component: AnnonceursComponent },
+  { path: 'annonceursCampagnes', component: AnnonceurscampagnesComponent },
+  { path: 'annonceursEquipes', component: AnnonceursteamsComponent },
   { path: 'equipes', component: EquipesComponent },
   { path: 'equipes/:nom/membres', component: MembresComponent },
+  { path: 'equipes/:nom/membresAdmin', component: MembresadminComponent },
+  { path: 'equipesAdmin/:email', component: TeamsadminComponent },
   { path: 'invitation', component: InvitationComponent },
   { path: 'campagnes', component: CampagnesComponent },
+  { path: 'campagnesAdmin/:email', component: CampagnesadminComponent },
   { path: 'bannières/:nom_campagne', component: BannersComponent },
   { path: 'banner/:id', component: BannerComponent },
-  { path: 'téléchargerBannière', component: UploadComponent },
-  { path: 'design', component: DesignComponent },
+  { path: 'touslesbannières', component: AllbannersComponent },
+  { path: 'bannières/:nom/:email', component: AutorisationsComponent },
+  { path: 'téléchargerBannière/:nom_campagne', component: UploadComponent },
+  { path: 'design/:nom_campagne', component: DesignComponent },
+  { path: 'offres/:email', component: OffresComponent },
+  { path: 'offresadmin', component: OffresadminComponent },
+  { path: 'paiement', component: PaiementComponent },
   { path: 'alerts', component: AlertsComponent },
   { path: 'accordion', component: AccordionComponent },
   { path: 'badges', component: BadgesComponent },

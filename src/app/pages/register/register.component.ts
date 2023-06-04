@@ -53,8 +53,9 @@ export class RegisterComponent implements OnInit {
         const adresseE = this.annonceur.adresseE;
         console.log(`Adresse de l'entreprise de l'annonceur enregistré: ` + adresseE)
         localStorage.setItem('token', this.token)
-        this.router.navigate(['/'])
-        console.log( `Successful Navigation`)
+        this.router.navigate([`/offres/${emailAnn}`])
+        console.log(`Successful Navigation`)
+        alert(`Succés d'inscription`);
         this.shared.setToken(this.token);
         console.log(this.token)
         console.log(this.shared.getToken());

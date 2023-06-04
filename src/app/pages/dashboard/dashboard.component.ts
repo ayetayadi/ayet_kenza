@@ -14,7 +14,7 @@ export class DashboardComponent implements OnInit {
       this.router.navigate(['/dashboard']);
     }
     else if (this.authService.isAdminLoggedIn() != false) {
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['/annonceurs']);
     }
    }
 

@@ -3,12 +3,28 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-width: 500px;
+    max-width: 600px;
     margin: 0 auto;
+}
+.form-group{
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 3px;
+    text-align: center;
+
+}
+
+.h5{
+    size:10px ;
+    font-size: 3px;
+
 }
 
 #main form input[type="text"],
+#main form input[type="date"],
 #main form input[type="textarea"],
+#main form input[type="time"],
+#main form select,
 #main form input[type="file"] {
     width: 100%;
     padding: 12px;
@@ -17,6 +33,7 @@
     border-radius: 4px;
     box-sizing: border-box;
 }
+
 
 #main form input[type="file"] {
     margin-bottom: 16px;
@@ -37,7 +54,10 @@
 }
 
 #main form input[type="text"]::placeholder,
-#main form input[type="textarea"]::placeholder {
+#main form input[type="date"]::placeholder,
+#main form input[type="textarea"]::placeholder
+#main form option
+ {
     color: #aaa;
 }
 
@@ -51,7 +71,7 @@
 }
 
 .wrapper {
-    width: 600px;
+    width: 700px;
     padding: 40px 30px 50px 30px;
     background: #fff;
     border-radius: 5px;

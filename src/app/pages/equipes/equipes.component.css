@@ -14,6 +14,7 @@
 }
 
 
+
 .card {
     margin-bottom: 20px;
     margin-left: 20px;
@@ -59,6 +60,7 @@
     cursor: pointer;
     margin-top: 20px;
     border-radius: 5px;
+    margin-left: 400px;
 }
 
 .button2:hover {
@@ -133,12 +135,23 @@ form input::placeholder {
     transform: translate(50%, -180%);
 }
 
-.input-area .icon {
-    top: 12px;
+.field .input-area {
+    position: relative;
+  }
+  
+  .field .input-area .icon {
+    position: absolute;
     left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
     color: #bfbfbf;
-    transition: color 0.2s ease;
-}
+  }
+  
+  .field .input-area input {
+    padding-left: 30px; /* Adjust the value to create space for the icon */
+  }
+  
+  
 
 .btn3 {
     background-color: #9155FD;

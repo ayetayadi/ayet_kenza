@@ -10,20 +10,9 @@ export class AccountService {
 
   constructor(private http: HttpClient, private shared: SharedService) { }
 
-  private url = 'http://localhost:3000/'
-  private urlAnnonceur = 'http://127.0.0.1:3000/annonceur/';
-  private urlAdmin = 'http://127.0.0.1:3000/admin/';
-
-  changePassword(oldPassword: string, newPassword: string, email: string) {
-    const data = {
-      oldPassword: oldPassword,
-      newPassword: newPassword,
-      email: email
-    };
-
-    return this.http.post(this.urlAnnonceur + 'changePassword', data);
-  }
-
+  private url = 'http://localhost:3002/accountService/'
+  private urlAnnonceur = 'http://127.0.0.1:3002/accountService/annonceur/';
+  private urlAdmin = 'http://127.0.0.1:3002/accountService/admin/';
   
   getAnnonceur() {
     console.log(this.shared.getAnnonceurToken());
@@ -32,25 +21,22 @@ export class AccountService {
     console.log(token);
     return this.http.get(this.urlAnnonceur + 'profile', {
       observe: 'body',
-      params: new HttpParams().append('token', token)
+      params: new HttpParams().append('token', this.shared.getAnnonceurToken())
     })
   }
 
   updateAnnonceur(id: string, username: string, email: string, dateNaiss: string, tel: string, nomE: string, emailE: string, telE: string, domaineE: string, adresseE: string) {
-    console.log(this.shared.getAnnonceurToken());
-    const tokenObj = this.shared.getAnnonceurToken() as unknown as { token: string };
-    const token = tokenObj.token;
-    console.log(token);
+    const token = this.shared.getAnnonceurToken();
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       })
     };
-    const body = { id, username, email, dateNaiss, tel, nomE, emailE, telE, domaineE, adresseE };
-    return this.http.put(this.urlAnnonceur + 'annonceur/editProfile?token=' + token, body, httpOptions);
-
+    const body = { username, email, dateNaiss, tel, nomE, emailE, telE, domaineE, adresseE };
+    return this.http.put(`${this.urlAnnonceur}editProfile?token=${token}`, body);
   }
+  
 
   getAnnonceurs() {
     return this.http.get<any[]>(this.urlAdmin + 'getAll');
@@ -72,4 +58,17 @@ export class AccountService {
     return this.http.put(url, data);
   }
 
+  verifyRole(token: string): Observable<any> {
+    return this.http.get(`${this.url}verifyRole?token=${token}`);
+  }
+
+  resetPassword(passwordResetToken: string, password: string, confirmPassword: string) {
+    const body = { password, confirmPassword };
+    const url = this.url + `resetPassword?passwordResetToken=${passwordResetToken}`;
+    return this.http.post(url, body);
+  }
+
+  getPermission(token: string): Observable<any> {
+    return this.http.get(`${this.urlAnnonceur}getPermission?token=${token}`);
+  }
 }

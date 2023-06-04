@@ -52,8 +52,9 @@ import { BannersComponent } from './pages/banners/banners.component';
 import { BannerComponent } from './pages/banner/banner.component';
 import { UploadComponent } from './pages/upload/upload.component';
 import { DesignComponent } from './pages/design/design.component';
-import {AuthInterceptor} from './interceptors/auth.interceptor';
-
+import {AuthannonceurInterceptor} from './interceptors/authannonceur.interceptor';
+import {AuthadminInterceptor} from './interceptors/authadmin.interceptor';
+import { NgApexchartsModule } from "ng-apexcharts";
 import { ReactiveFormsModule } from '@angular/forms';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { MatRippleModule } from '@angular/material/core';
@@ -71,6 +72,20 @@ import { ClipboardModule } from 'ngx-clipboard';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
+import { TeamsadminComponent } from './pages/teamsadmin/teamsadmin.component';
+import { CampagnesadminComponent } from './pages/campagnesadmin/campagnesadmin.component';
+import { AllbannersComponent } from './pages/allbanners/allbanners.component';
+import { AutorisationsComponent } from './pages/autorisations/autorisations.component';
+import { OffresComponent } from './pages/offres/offres.component';
+import { PaiementComponent } from './pages/paiement/paiement.component';
+import { OffresadminComponent } from './pages/offresadmin/offresadmin.component';
+import { FactureComponent } from './pages/facture/facture.component';
+import { RapportComponent } from './pages/rapport/rapport.component';
+import { AdhomeComponent } from './pages/adhome/adhome.component';
+import { AnhomeComponent } from './pages/anhome/anhome.component';
+import { AnnonceurscampagnesComponent } from './pages/annonceurscampagnes/annonceurscampagnes.component';
+import { AnnonceursteamsComponent } from './pages/annonceursteams/annonceursteams.component';
+import { MembresadminComponent } from './pages/membresadmin/membresadmin.component';
 
 @NgModule({
   declarations: [
@@ -121,7 +136,21 @@ import { MaterialFileInputModule } from 'ngx-material-file-input';
     BannersComponent,
     BannerComponent,
     UploadComponent,
-    DesignComponent
+    DesignComponent,
+    TeamsadminComponent,
+    CampagnesadminComponent,
+    AllbannersComponent,
+    AutorisationsComponent,
+    OffresComponent,
+    PaiementComponent,
+    OffresadminComponent,
+    FactureComponent,
+    RapportComponent,
+    AdhomeComponent,
+    AnhomeComponent,
+    AnnonceurscampagnesComponent,
+    AnnonceursteamsComponent,
+    MembresadminComponent
   ],
   imports: [
     BrowserModule,
@@ -140,6 +169,7 @@ import { MaterialFileInputModule } from 'ngx-material-file-input';
     MatButtonModule,
     MatToolbarModule,
     MatIconModule,
+    NgApexchartsModule,
     MatCheckboxModule,
     MatSliderModule,
     MatGridListModule,
@@ -150,10 +180,16 @@ import { MaterialFileInputModule } from 'ngx-material-file-input';
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
+      useClass: AuthannonceurInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthadminInterceptor,
       multi: true
     }
-  ],
+  ]
+  ,
   bootstrap: [AppComponent]
 })
 export class AppModule { }

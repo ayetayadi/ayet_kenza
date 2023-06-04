@@ -3,7 +3,6 @@
         <h1>Liste des membres de l'équipe "{{ teamName }}"</h1>
         <nav>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a routerLink="/">Accueil</a></li>
                 <li class="breadcrumb-item"><a routerLink="/equipes">Equipes</a></li>
                 <li class="breadcrumb-item active">Membres</li>
             </ol>
@@ -16,27 +15,49 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Membres de l'équipe "{{ teamName }}"</h5>
-                            <button class="card-button" type="button" data-bs-toggle="modal" data-bs-target="#basicModal" >+ Inviter</button>
-                            <table class="table datatable">
+                            <input class="input1" type="text" [(ngModel)]="searchText"
+                                placeholder="Chercher Membre par email">
+                            <div class="filter-container">
+                                <label>Filter par:</label>
+                                <select [(ngModel)]="selectedStatus">
+                                    <option value="">Tout</option>
+                                    <option value="accepté">Accepté</option>
+                                    <option value="en attente">En attente</option>
+                                </select>
+                            </div>
+
+                            <button class="card-button" type="button" data-bs-toggle="modal"
+                                data-bs-target="#basicModal">+ Inviter</button>
+        <table class="table">
                                 <thead>
                                     <tr>
                                         <th scope="col">#</th>
                                         <th scope="col">Avatar</th>
                                         <th scope="col">Email</th>
-                                        <th scope="col">Status</th>
-                                        <th scope="col">Action</th>
+                                        <th scope="col">Statut d'invitation</th>
+                                        <th scope="col" style="text-align: center;">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let membre of membres; let i=index">
+                                    <tr *ngFor="let membre of getPaginatedMembres(); let i=index">
                                         <th scope="row"><br>{{i + 1}}</th>
                                         <td><img [src]="generateAvatar(membre.email)" style="width: 50px;"></td>
                                         <td><br>{{membre.email}}</td>
                                         <td><br>{{ membre.status }}</td>
-                                        <td><button class="card-btn btn1" (click)="deleteMember(membre.email, teamName)"><i class="fa fa-trash"></i></button></td>
+                                        <td style="text-align: center;">
+                                            <button class="card-button2"
+                                                (click)="deleteMember(membre)">Retirer le
+                                                membre</button>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
+                            <div class="pagination">
+                                <button [disabled]="currentPage === 1" (click)="currentPage = currentPage - 1">Précédente</button>
+                                <button *ngFor="let page of getPaginationArray()" [class.active]="currentPage === page"
+                                    (click)="currentPage = page">{{ page }}</button>
+                                <button [disabled]="currentPage === getTotalPages()" (click)="currentPage = currentPage + 1">Suivante</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -48,10 +69,11 @@
     <section class="section min-vh-100 d-flex flex-column align-items-center justify-content-center">
         <div class="col-lg-5">
             <h2>Aucun membre dans "{{ teamName }}"</h2>
-            <button class="card-button1" type="button" data-bs-toggle="modal" data-bs-target="#basicModal" >+ Inviter</button>
+            <button class="card-button1" type="button" data-bs-toggle="modal" data-bs-target="#basicModal">+
+                Inviter</button>
         </div>
     </section>
-    
+
 </ng-template>
 
 
@@ -60,14 +82,14 @@
         <div class="modal-dialog ">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5>Inviter des membres dans l'équipe "{{ teamName }}"</h5>
+                    <h5>Inviter membre dans l'équipe "{{ teamName }}"</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="field email">
                         <div class="input-area">
                             <input name="email" type="email" placeholder="Saisir l'email" [(ngModel)]="email" required>
-                            <i class="icon fa fa-group"></i>
+                            
                         </div>
                     </div>
                     <div *ngIf="message">{{ message }}</div>

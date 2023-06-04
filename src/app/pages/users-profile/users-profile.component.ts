@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AccountService } from 'src/app/services/account.service';
+import { PaiementService } from 'src/app/services/paiement.service';
+import { DatePipe } from '@angular/common';
 
 
 @Component({
@@ -16,6 +18,11 @@ export class UsersProfileComponent implements OnInit {
     newPassword: ''
   }
 
+  factures: any[] = [];
+
+  itemsPerPage = 5;
+  currentPage = 1;
+  searchText = '';
 
   updated = {
     username: '',
@@ -23,13 +30,15 @@ export class UsersProfileComponent implements OnInit {
     dateNaiss: '',
     tel: '',
     nomE: '',
-    emailE:'',
+    emailE: '',
     telE: '',
-    domaineE:'',
-    adresseE:''
+    domaineE: '',
+    adresseE: ''
   }
 
-  id:string = '';
+  profile: any = {};
+
+  id: string = '';
   username: string = '';
   email: string = '';
   dateNaiss: string = '';
@@ -39,12 +48,12 @@ export class UsersProfileComponent implements OnInit {
   telE: string = '';
   domaineE: string = '';
   adresseE: string = '';
-  
+
   errorMessage: string = '';
 
-  constructor(private accountService: AccountService, private router: Router) {
+  constructor(private accountService: AccountService, private router: Router, private paiementService: PaiementService) {
 
-   this.accountService.getAnnonceur().subscribe(
+    this.accountService.getAnnonceur().subscribe(
       (response: any) => {
         console.log(response)
         this.id = response.id;
@@ -67,46 +76,53 @@ export class UsersProfileComponent implements OnInit {
         console.log(this.domaineE)
         this.adresseE = response.adresseE;
         console.log(this.adresseE)
-        
+
       },
       (error: any) => {
         console.log(error);
         this.router.navigate(['/']);
       }
-    ); 
-  }
-  ngOnInit(): void {
-   }
-
-  changePassword() {
-    this.accountService.changePassword(this.annonceur.oldPassword, this.annonceur.newPassword, this.annonceur.email).subscribe(
-      (res) => {
-        console.log(res);
-        const oldPassword = this.annonceur.oldPassword;
-        console.log(`oldPassword de l'annonceur current: ` + oldPassword)
-        const newPassword = this.annonceur.newPassword;
-        console.log(`New password de l'annonceur current: ` + newPassword)
-        this.router.navigate(['/'])
-      },
-      (error) => {
-        console.log(error);
-      }
     );
   }
 
-  updateProfile(){
-    this.accountService.updateAnnonceur(this.id, this.username, this.email, this.dateNaiss, this.tel, this.nomE, this.emailE,this.telE, this.domaineE, this.adresseE)
-    .subscribe({
-      next: () => {
-        const username = this.username;
-        console.log(`username de l'annonceur: ` + username)
-        alert('Profile successfully updated!');
-      },
-      error: (err) => {
-        this.errorMessage = err.message || 'An error occurred while updating your profile.';
-      }
+
+  loadFactures() {
+    this.paiementService.voirFactures().subscribe((factures: any[]) => {
+      console.log(factures);
+      this.factures = factures;
+    }, error => {
+      console.log(error);
     });
+  }
+
+  ngOnInit(): void {
+    this.loadFactures();
+  }
+
+
+  updateProfile() {
+    this.accountService.updateAnnonceur(this.id, this.username, this.email, this.dateNaiss, this.tel, this.nomE, this.emailE, this.telE, this.domaineE, this.adresseE)
+      .subscribe(
+        () => {
+          console.log(`Username of the annonceur: ${this.username}`);
+          alert('Le profil est mis à jour avec succés!');
+        },
+        err => {
+          this.errorMessage = err.message || 'An error occurred while updating your profile.';
+        }
+      );
+  }
+  
+
+  formatTotalValue(total: number): string {
+    if (isNaN(total) || total === null || total === undefined) {
+      return '';
     }
+    const formattedTotal = total.toFixed(2);
+
+    return formattedTotal;
+  }
+
 }
 
 

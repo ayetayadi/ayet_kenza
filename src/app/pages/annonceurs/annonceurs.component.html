@@ -1,101 +1,176 @@
- <head>
+<head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <main id="main" class="main">
-<div class="pagetitle">
-    <h3>Liste des Annonceurs</h3>
-    <nav>
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a routerLink="/">Accueil</a></li>
-            <li class="breadcrumb-item active">Annonceurs</li>
-        </ol>
-    </nav>
-</div>
-<div class="container"  *ngIf="annonceurs.length > 0; else pasAnnonceurs">
-    <input class="input1" type="text" [(ngModel)]="searchText" placeholder="Chercher Annonceur">
-    <button  class="button1" data-bs-toggle="modal" data-bs-target="#addModal">Ajouter un annonceur</button>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Nom d'utilisateur</th>
-                <th>Email</th>
-                <th>Action</th>
-             </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let annonceur of getPaginatedAnnonceurs(); let i = index">
-                <td>{{ (currentPage - 1) * itemsPerPage + i + 1 }}</td>
-                <td>{{annonceur.username }}</td>
-                <td>{{ annonceur.email }}</td>
-                
-                   <td style="display: flex; justify-content: center; align-items: center;">
-                    <button class="btn btn-delete" (click)="deleteAnnonceur(annonceur.email)">
-                        <i class="fa fa-trash"></i>
-                    </button>
+    <div class="pagetitle">
+        <h3>Liste des Annonceurs</h3>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/acceuiladmin">Accueil</a></li>
+                <li class="breadcrumb-item active">Annonceurs</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="container" *ngIf="annonceurs.length > 0; else pasAnnonceurs">
+        <input class="input1" type="text" [(ngModel)]="searchText" placeholder="Chercher Annonceur">
+        <button class="button1" data-bs-toggle="modal" data-bs-target="#addModal">Ajouter un annonceur</button>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nom d'utilisateur</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Type d'offre choisi</th>
+                    <th scope="col">Voir détails</th>
+                    <th scope="col">Voir factures</th>
+                    <th scope="col">Action</th>
 
-                    <button class="btn btn-edit" data-bs-toggle="modal" data-bs-target="#editModal" (click)="getEmail(annonceur.email); useEmail()">
-                        <i class="fa fa-edit"></i>
-                    </button>
-              
-                </td>
-             </tr>
-        </tbody>
-    </table>
-    <div class="pagination">
-        <button [disabled]="currentPage === 1" (click)="currentPage = currentPage - 1">Précédente</button>
-        <button *ngFor="let page of getPaginationArray()" [class.active]="currentPage === page"
-           (click)="currentPage = page">{{ page }}</button>
-        <button [disabled]="currentPage === getTotalPages()" (click)="currentPage = currentPage + 1">Suivante</button>
-     </div>
-</div>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let annonceur of getPaginatedAnnonceurs(); let i = index">
+                    <td>{{ (currentPage - 1) * itemsPerPage + i + 1 }}</td>
+                    <td>{{annonceur.username }}</td>
+                    <td>{{ annonceur.email }}</td>
+                    <td class="center">{{ annonceur.typeOffre }}</td>
+                    <td class="center">
+                        <button class="btn btn-detail" data-bs-toggle="modal" data-bs-target="#viewModal"
+                            (click)="showDetails(annonceur)">
+                            <i class="fa fa-eye"></i>
+                        </button>
+                    </td>
+                    <td class="center">
+                        <button class="btn btn-detail" data-bs-toggle="modal" data-bs-target="#viewModal1"
+                            (click)="getFactures()">
+                            <i class="fa fa-eye"></i>
+                        </button>
+                    </td>
+                    <td style="display: flex; justify-content: center; align-items: center;">
+                        <button data-bs-toggle="modal" data-bs-target="#editModal" class="btn btn-delete"
+                            (click)="getEmail(annonceur.email)"> <i class="bi bi-pencil"></i> </button>
+                        <button class="btn btn-edit" (click)="deleteAnnonceur(annonceur.email)">
+                            <i class="bi bi-trash"></i>
+                        </button>
 
-<ng-template #pasAnnonceurs>
-    <section class="section min-vh-100 d-flex flex-column align-items-center justify-content-center">
-        <div class="col-lg-6">
-            <h2>Pas des Annonceurs!! 😵</h2>
-            <button class="button2" data-bs-toggle="modal" data-bs-target="#addModal">Ajouter Annonceur</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="pagination">
+            <button [disabled]="currentPage === 1" (click)="currentPage = currentPage - 1">Précédente</button>
+            <button *ngFor="let page of getPaginationArray()" [class.active]="currentPage === page"
+                (click)="currentPage = page">{{ page }}</button>
+            <button [disabled]="currentPage === getTotalPages()"
+                (click)="currentPage = currentPage + 1">Suivante</button>
         </div>
-    </section>
-</ng-template>
+    </div>
+
+    <ng-template #pasAnnonceurs>
+        <section class="section min-vh-100 d-flex flex-column align-items-center justify-content-center">
+            <div class="col-lg-6">
+                <h2>Pas des Annonceurs!! 😵</h2>
+                <button class="button2" data-bs-toggle="modal" data-bs-target="#addModal">Ajouter Annonceur</button>
+            </div>
+        </section>
+    </ng-template>
 </main>
+<form>
+    <div class="modal fade" id="viewModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Voir les détails d'annonceur</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        fdprocessedid="rus26i"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="username">Nom d'utilisateur:</label>
+                        <input type="text" name="username" [(ngModel)]="username" class="form-control" id="username"
+                            [disabled]="isDetailsDisabled" [value]="username ? username : '-'">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Adresse email:</label>
+                        <input type="email" name="email" [(ngModel)]="email" class="form-control" id="email"
+                            [disabled]="isDetailsDisabled" [value]="email ? email : '-'">
+                    </div>
+                    <div class="form-group">
+                        <label for="tel">Numéro de téléphone:</label>
+                        <input type="tel" name="tel" [(ngModel)]="tel" class="form-control" id="tel"
+                            [disabled]="isDetailsDisabled" [value]="tel ? tel : '-'">
+                    </div>
+                    <div class="form-group">
+                        <label for="nomE">Nom de l'entreprise:</label>
+                        <input type="text" name="nomE" [(ngModel)]="nomE" class="form-control" id="nomE"
+                            [disabled]="isDetailsDisabled" [value]="nomE ? nomE : '-'">
+                    </div>
+                    <div class="form-group">
+                        <label for="emailE">Adresse email de l'entreprise:</label>
+                        <input type="email" name="emailE" [(ngModel)]="emailE" class="form-control" id="emailE"
+                            [disabled]="isDetailsDisabled" [value]="emailE ? emailE : '-'">
+                    </div>
+                    <div class="form-group">
+                        <label for="adresseE">Adresse de l'entreprise:</label>
+                        <input type="text" name="adresseE" [(ngModel)]="adresseE" class="form-control" id="adresseE"
+                            [disabled]="isDetailsDisabled" [value]="adresseE ? adresseE : '-'">
+                    </div>
+                    <div class="form-group">
+                        <label for="domaineE">Domaine de l'entreprise:</label>
+                        <input type="text" name="domaineE" [(ngModel)]="domaineE" class="form-control" id="domaineE"
+                            [disabled]="isDetailsDisabled" [value]="domaineE ? domaineE : '-'">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        (click)="resetDetails()">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+
+
 <form>
     <div class="modal fade" id="editModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Modifier l'annonceur</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" fdprocessedid="rus26i"></button>                </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="username">Nom d'utilisateur:</label>
-                            <input type="text" name="username" [(ngModel)]="username" class="form-control" id="username" >
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Adresse email:</label>
-                            <input type="email" name="email" [(ngModel)]="email" class="form-control" id="email">
-                        </div>
-                        <div class="form-group">
-                            <label for="tel">Numéro de téléphone:</label>
-                            <input type="tel" name="tel" [(ngModel)]="tel" class="form-control" id="tel">
-                        </div>
-                        <div class="form-group">
-                            <label for="nomE">Nom de l'entreprise:</label>
-                            <input type="text" name="nomE" [(ngModel)]="nomE" class="form-control" id="nomE">
-                        </div>
-                        <div class="form-group">
-                            <label for="emailE">Adresse email de l'entreprise:</label>
-                            <input type="email" name="emailE" [(ngModel)]="emailE" class="form-control" id="emailE" >
-                        </div>
-                        <div class="form-group">
-                            <label for="adresseE">Adresse de l'entreprise:</label>
-                            <input type="text" name="adresseE" [(ngModel)]="adresseE" class="form-control" id="adresseE">
-                        </div>
-                        <div class="form-group">
-                            <label for="domaineE">Domaine de l'entreprise:</label>
-                            <input type="text" name="domaineE" [(ngModel)]="domaineE" class="form-control" id="domaineE">
-                        </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        fdprocessedid="rus26i"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="username">Nom d'utilisateur:</label>
+                        <input type="text" name="username" [(ngModel)]="username" class="form-control" id="username">
                     </div>
+                    <div class="form-group">
+                        <label for="email">Adresse email:</label>
+                        <input type="email" name="email" [(ngModel)]="email" class="form-control" id="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="tel">Numéro de téléphone:</label>
+                        <input type="tel" name="tel" [(ngModel)]="tel" class="form-control" id="tel">
+                    </div>
+                    <div class="form-group">
+                        <label for="nomE">Nom de l'entreprise:</label>
+                        <input type="text" name="nomE" [(ngModel)]="nomE" class="form-control" id="nomE">
+                    </div>
+                    <div class="form-group">
+                        <label for="emailE">Adresse email de l'entreprise:</label>
+                        <input type="email" name="emailE" [(ngModel)]="emailE" class="form-control" id="emailE">
+                    </div>
+                    <div class="form-group">
+                        <label for="adresseE">Adresse de l'entreprise:</label>
+                        <input type="text" name="adresseE" [(ngModel)]="adresseE" class="form-control" id="adresseE">
+                    </div>
+                    <div class="form-group">
+                        <label for="domaineE">Domaine de l'entreprise:</label>
+                        <input type="text" name="domaineE" [(ngModel)]="domaineE" class="form-control" id="domaineE">
+                    </div>
+                </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" (click)="editAnnonceur()">Enregistrer</button>
                 </div>
@@ -112,23 +187,71 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Ajouter un annonceur</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" fdprocessedid="ee0oo"></button>                </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="username">Nom d'utilisateur:</label>
-                            <input type="text" name="username" [(ngModel)]="username" class="form-control" id="username" >
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Adresse email:</label>
-                            <input type="email" name="email" [(ngModel)]="email" class="form-control" id="email">
-                        </div>   
-                        <div class="form-group">
-                            <label for="password">Mot de Passe:</label>
-                            <input type="password" name="password" [(ngModel)]="password" class="form-control" id="password">
-                        </div>       
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        fdprocessedid="ee0oo"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="username">Nom d'utilisateur:</label>
+                        <input type="text" name="username" [(ngModel)]="username" class="form-control" id="username">
                     </div>
+                    <div class="form-group">
+                        <label for="email">Adresse email:</label>
+                        <input type="email" name="email" [(ngModel)]="email" class="form-control" id="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Mot de Passe:</label>
+                        <input type="password" name="password" [(ngModel)]="password" class="form-control" id="password"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="tel">Téléphone:</label>
+                        <input type="tel" name="tel" [(ngModel)]="tel" class="form-control" id="tel">
+                    </div>
+                    <div class="form-group">
+                        <label for="nomE">Nom d'entreprise:</label>
+                        <input type="text" name="nomE" [(ngModel)]="nomE" class="form-control" id="nomE">
+                    </div>
+                    <div class="form-group">
+                        <label for="emailE">Email d'entreprise:</label>
+                        <input type="email" name="emailE" [(ngModel)]="emailE" class="form-control" id="emailE">
+                    </div>
+                    <div class="form-group">
+                        <label for="domaineE">Domaine d'entreprise:</label>
+                        <input type="text" name="domaineE" [(ngModel)]="domaineE" class="form-control" id="domaineE">
+                    </div>
+                    <div class="form-group">
+                        <label for="adresseE">Adresse d'entreprise:</label>
+                        <input type="text" name="adresseE" [(ngModel)]="adresseE" class="form-control" id="adresseE">
+                    </div>
+                </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" (click)="createAnnonceur()">Enregistrer</button>
+                    <button type="submit" class="btn btn-primary" (click)="createAnnonceur()">Envoyer
+                        l'invitation</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<form>
+    <div class="modal fade" id="viewModal1" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Voir factures</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        fdprocessedid="rus26i"></button>
+                </div>
+                <div class="modal-body">
+                    <div *ngFor="let facture of factures">
+                        <p>{{ facture.id }}</p>
+                        <p>{{ facture.amount }}</p>
+                      </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        (click)="resetDetails()">Fermer</button>
                 </div>
             </div>
         </div>

@@ -13,9 +13,9 @@
     <div class="wrapper">
         <div class="logo">
             <div class="align-items-center justify-content-center">
-                <div class="logo  align-items-center">
-                    <img src="assets/img/logo.png" alt="">
-                    <span class="d-none d-lg-block">Banner</span>
+                <div class="logo">
+                    <img src="../../../assets/img/favicon.png" alt="">
+                    <h6 class="MuiTypography-root MuiTypography-h6 css-1cb7fve">Banner</h6>
                 </div>
             </div>
         </div>
@@ -41,7 +41,7 @@
             <div class="col-md-6">
                 <div class="field email">
                     <div class="input-area">
-                        <input [(ngModel)]="annonceur.email" name="email" type="text" placeholder="Email Address"
+                        <input [(ngModel)]="annonceur.email" name="email" type="text" placeholder="Adresse email"
                             style="margin-bottom: 10px;">
                         <i class="icon fas fa-envelope"></i>
                         <i class="error error-icon fas fa-exclamation-circle"></i>
@@ -51,88 +51,96 @@
             </div>
 
             <div class="col-md-6">
-            <div class="field tel">
-                <div class="input-area">
-                    <input [(ngModel)]="annonceur.tel" name="tel" type="tel" placeholder="Phone Number" style="margin-bottom: 20px; margin-left: -10px;">
-                    <i class="icon fas fa-phone"></i>
-                    <i class="error error-icon fas fa-exclamation-circle"></i>
+                <div class="field tel">
+                    <div class="input-area">
+                        <input [(ngModel)]="annonceur.tel" name="tel" type="tel" placeholder="Phone Number"
+                            style="margin-bottom: 20px; margin-left: -10px;">
+                        <i class="icon fas fa-phone-alt"></i>
+                        <i class="error error-icon fas fa-exclamation-circle"></i>
+                    </div>
+                    <div class="error error-txt">Téléphone ne peut pas être vide</div>
                 </div>
-                <div class="error error-txt">Téléphone ne peut pas être vide</div>
             </div>
-        </div>
 
-        <div class="col-md-6">
-            <div class="field dateNaiss">
-                <div class="input-area">
-                    <input [(ngModel)]="annonceur.dateNaiss" name="dateNaiss" type="date" placeholder="Date de Naissance" style="margin-bottom: 20px;">
-                    <i class="icon i i-birthday"></i>
-                    <i class="error error-icon fas fa-exclamation-circle"></i>
+            <div class="col-md-6">
+                <div class="field dateNaiss">
+                    <div class="input-area">
+                        <input [(ngModel)]="annonceur.dateNaiss" name="dateNaiss" type="date"
+                            placeholder="Date de Naissance" style="margin-bottom: 20px;">
+                        <i class="icon fas fa-calendar-alt"></i>
+                    </div>
+                    <div class="error error-txt">Date de Naissance ne peut pas être vide</div>
                 </div>
-                <div class="error error-txt">Date de Naissance ne peut pas être vide</div>
-            </div>
-        </div>
 
-        <div class="col-md-6">
-            <div class="field password">
-                <div class="input-area">
-                    <input [(ngModel)]="annonceur.password" name="password" type="password" placeholder="Mot de Passe" style="margin-bottom: 20px; margin-left: -10px;">
-                    <i class="icon fas fa-lock"></i>
-                    <i class="error error-icon fas fa-exclamation-circle"></i>
-                </div>
-                <div class="error error-txt">Mot de Passe ne peut pas être vide</div>
             </div>
-        </div>
-        <div class="col-md-6">
-            <div class="field nomE">
-                <div class="input-area">
-                    <input [(ngModel)]="annonceur.nomE" name="nomE" type="text" placeholder="Nom d'entreprise"  style="margin-bottom: 20px;">
-                    <i class="icon fas fa-lock"></i>
-                    <i class="error error-icon fas fa-exclamation-circle"></i>
+
+            <div class="col-md-6">
+                <div class="field password">
+                    <div class="input-area">
+                        <input [(ngModel)]="annonceur.password" name="password" type="password"
+                            placeholder="Mot de Passe" style="margin-bottom: 20px; margin-left: -10px;">
+                        <i class="icon fas fa-lock"></i>
+                        <i class="error error-icon fas fa-exclamation-circle"></i>
+                    </div>
+                    <div class="error error-txt">Mot de Passe ne peut pas être vide</div>
                 </div>
-                <div class="error error-txt">Nom d'entreprise ne peut pas être vide</div>
             </div>
-        </div>
-        <div class="col-md-6">
-            <div class="field emailE">
-                <div class="input-area">
-                    <input [(ngModel)]="annonceur.emailE" name="emailE" type="email" placeholder="Email d'entreprise"  style="margin-bottom: 20px; margin-left: -10px;">
-                    <i class="icon fas fa-lock"></i>
-                    <i class="error error-icon fas fa-exclamation-circle"></i>
+            <div class="col-md-6">
+                <div class="field nomE">
+                    <div class="input-area">
+                        <input [(ngModel)]="annonceur.nomE" name="nomE" type="text" placeholder="Nom d'entreprise"
+                            style="margin-bottom: 20px;">
+                        <i class="icon fas fa-warehouse"></i>
+                        <i class="error error-icon fas fa-exclamation-circle"></i>
+                    </div>
+                    <div class="error error-txt">Nom d'entreprise ne peut pas être vide</div>
                 </div>
-                <div class="error error-txt">Email d'entreprise ne peut pas être vide</div>
             </div>
-        </div>
-        <div class="col-md-6">
-            <div class="field telE">
-                <div class="input-area">
-                    <input [(ngModel)]="annonceur.telE" name="telE" type="text" placeholder="Téléphone d'entreprise"  style="margin-bottom: 20px;">
-                    <i class="icon fas fa-lock"></i>
-                    <i class="error error-icon fas fa-exclamation-circle"></i>
+            <div class="col-md-6">
+                <div class="field emailE">
+                    <div class="input-area">
+                        <input [(ngModel)]="annonceur.emailE" name="emailE" type="email"
+                            placeholder="Email d'entreprise" style="margin-bottom: 20px; margin-left: -10px;">
+                        <i class="icon fas fa-envelope"></i>
+                        <i class="error error-icon fas fa-exclamation-circle"></i>
+                    </div>
+                    <div class="error error-txt">Email d'entreprise ne peut pas être vide</div>
                 </div>
-                <div class="error error-txt">Téléphone d'entreprise ne peut pas être vide</div>
             </div>
-        </div>
-        
-        <div class="col-md-6">
-            <div class="field domaineE">
-                <div class="input-area">
-                    <input [(ngModel)]="annonceur.domaineE" name="telE" type="text" placeholder="Domaine d'entreprise"  style="margin-bottom: 20px; margin-left: -10px;">
-                    <i class="icon fas fa-lock"></i>
-                    <i class="error error-icon fas fa-exclamation-circle"></i>
+            <div class="col-md-6">
+                <div class="field telE">
+                    <div class="input-area">
+                        <input [(ngModel)]="annonceur.telE" name="telE" type="text" placeholder="Téléphone d'entreprise"
+                            style="margin-bottom: 20px;">
+                        <i class="icon fas fa-fax"></i>
+                        <i class="error error-icon fas fa-exclamation-circle"></i>
+                    </div>
+                    <div class="error error-txt">Téléphone d'entreprise ne peut pas être vide</div>
                 </div>
-                <div class="error error-txt">Domaine d'entreprise ne peut pas être vide</div>
             </div>
-        </div>
-        <div class="col-md-6">
-            <div class="field adresseE">
-                <div class="input-area">
-                    <input [(ngModel)]="annonceur.adresseE" name="adresseE" type="text" placeholder="Adresse d'entreprise"  style="margin-bottom: 20px;">
-                    <i class="icon fas fa-lock"></i>
-                    <i class="error error-icon fas fa-exclamation-circle"></i>
+
+            <div class="col-md-6">
+                <div class="field domaineE">
+                    <div class="input-area">
+                        <input [(ngModel)]="annonceur.domaineE" name="telE" type="text"
+                            placeholder="Domaine d'entreprise" style="margin-bottom: 20px; margin-left: -10px;">
+                        <i class="icon fas fa-archive"></i>
+                        <i class="error error-icon fas fa-exclamation-circle"></i>
+                    </div>
+                    <div class="error error-txt">Domaine d'entreprise ne peut pas être vide</div>
                 </div>
-                <div class="error error-txt">Adresse d'entreprise ne peut pas être vide</div>
             </div>
-        </div>
+            <div class="col-md-6">
+                <div class="field adresseE">
+                    <div class="input-area">
+                        <input [(ngModel)]="annonceur.adresseE" name="adresseE" type="text"
+                            placeholder="Adresse d'entreprise" style="margin-bottom: 20px;">
+                        <i class="icon fas fa-location-dot"></i>
+                        <i class="error error-icon fas fa-exclamation-circle"></i>
+                    </div>
+                    <div class="error error-txt">Adresse d'entreprise ne peut pas être vide</div>
+                </div>
+            </div>
             <input (click)="register()" type="submit" value="S'identifier">
         </form>
         <div class="sign-txt" style="color:rgba(58, 53, 65, 0.87);">Vous avez déjà un compte? <a

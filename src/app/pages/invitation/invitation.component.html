@@ -11,10 +11,10 @@
 
 <body>
     <div class="wrapper">
-        <i id="logo" class="fa-solid fa-sparkle" style="color: #9155fd;"></i>
-        <h6 class="MuiTypography-root MuiTypography-h6 css-1cb7fve">Banner</h6>
-
-
+        <div class="logo">
+            <img src="../../../assets/img/favicon.png" alt="">
+            <h6 class="MuiTypography-root MuiTypography-h6 css-1cb7fve">Banner</h6>
+        </div>
 
         <form action="#">
             <div class="MuiBox-root css-1fobf8d">
@@ -29,7 +29,7 @@
                     <i class="icon fas fa-lock"></i>
                     <i class="error error-icon fas fa-exclamation-circle"></i>
                 </div>
-                <div class="error error-txt">Mot de Passe ne peut pas être vide</div>
+                <div class="error error-txt">Code ne peut pas être vide</div>
             </div>
         
             <input (click)="acceptInvitation()" type="submit" value="Enregistrer">

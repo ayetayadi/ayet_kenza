@@ -11,15 +11,20 @@
 
 <body>
     <div class="wrapper">
-        <i id="logo" class="fa-solid fa-sparkle" style="color: #9155fd;"></i>
-        <h6 class="MuiTypography-root MuiTypography-h6 css-1cb7fve">Banner</h6>
+        <div class="align-items-center justify-content-center">
+            <div class="logo">
+                <img src="../../../assets/img/favicon.png" alt="">
+                <h6 class="MuiTypography-root MuiTypography-h6 css-1cb7fve">Banner</h6>
+            </div>
+        </div>
+
         <form action="#" (submit)="onSubmit()">
             <div class="MuiBox-root css-1fobf8d">
                 <h5 class="MuiTypography-root MuiTypography-h5 css-vsfzib">Bienvenue à <!-- -->Banner<!-- -->! 👋🏻</h5>
                 <p class="MuiTypography-root MuiTypography-body2 css-4yvesp">Veuillez vous connecter à votre compte et
                     commencez l'aventure!</p>
             </div>
-            <div class="field email" >
+            <div class="field email">
                 <div class="input-area">
                     <input [(ngModel)]="annonceur.email" [(ngModel)]="admin.email" name="email" type="text"
                         placeholder="Adresse Email">
@@ -28,7 +33,7 @@
                 </div>
                 <div class="error error-txt" *ngIf="!emailValid">Email ne peut pas être vide</div>
             </div>
-            <div class="field password" >
+            <div class="field password">
                 <div class="input-area">
                     <input [(ngModel)]="annonceur.password" [(ngModel)]="admin.password" name="password" type="password"
                         placeholder="Password">
@@ -37,9 +42,18 @@
                 </div>
                 <div class="error error-txt" *ngIf="!passwordValid">Mot de Passe ne peut pas être vide</div>
             </div>
+            <div class="field remember-me">
+                <input type="checkbox" name="rememberMe" [(ngModel)]="rememberMe">
+                <label class="checkbox-label">Se souvenir de moi</label>
+              </div>
+              
+
+
             <div class="pass-txt"><a [routerLink]="['/forgotPassword']">Mot de Passe oublié?</a></div>
 
-            <div class="ui error message ng-binding ng-scope" ng-if="messages.error" ng-bind-html="messages.error" ng-click="messages.error = null">{{ message }}</div>
+            <div class="ui error message ng-binding ng-scope" ng-if="messages.error" ng-bind-html="messages.error"
+                *ngIf="error" class="error" style="color: red;" ng-click="messages.error = null">{{ error }}</div>
+
 
             <input (click)="login()" type="submit" value="Se connecter">
         </form>

@@ -10,16 +10,16 @@ export class TeamService {
 
   constructor(private http: HttpClient, private shared: SharedService) { }
  
-  private url = 'http://localhost:3000/'
-  private urlAnnonceur = 'http://127.0.0.1:3000/annonceur/';
-  private urlAdmin = 'http://127.0.0.1:3000/admin/';
-  private urlMembre = 'http://127.0.0.1:3000/membre/';
+  private url = 'http://localhost:3003/teamService'
+  private urlAnnonceur = 'http://127.0.0.1:3003/teamService/annonceur/';
+  private urlAdmin = 'http://127.0.0.1:3003/teamService/admin/';
+  private urlMembre = 'http://127.0.0.1:3003/teamService/membre/';
 
 
   getTeamsForAnnonceur(id: string): Observable<any> {
     console.log(this.shared.getAnnonceurToken());
     const tokenObj = this.shared.getAnnonceurToken() as unknown as { token: string };
-    const token = tokenObj.token;
+    const token = this.shared.getAnnonceurToken();
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -30,8 +30,8 @@ export class TeamService {
     return this.http.get(`${this.urlAnnonceur}getTeams`, { headers: httpOptions.headers, params });
   }
 
-  createTeam(token: string, nom: string): Observable<any> {
-    return this.http.post<any>(`${this.urlAnnonceur}createTeam?token=${token}`, { nom });
+  createTeam(token: string, nom: string, nom_campagne: string): Observable<any> {
+    return this.http.post<any>(`${this.urlAnnonceur}createTeam?token=${token}`, { nom, nom_campagne });
   }
 
   deleteTeam(teamName: string, token: string) {
@@ -42,7 +42,7 @@ export class TeamService {
 
   updateTeam(teamName: string, newTeamName: string): Observable<any> {
     const tokenObj = this.shared.getAnnonceurToken() as unknown as { token: string };
-    const token = tokenObj.token;
+    const token = this.shared.getAnnonceurToken();
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -56,10 +56,10 @@ export class TeamService {
   }
 
 
-  sendInvitation(email: string, team: string): Observable<any> {
+  sendInvitation(email: string,team: string): Observable<any> {
     console.log(this.shared.getAnnonceurToken());
     const tokenObj = this.shared.getAnnonceurToken() as unknown as { token: string };
-    const token = tokenObj.token;
+    const token = this.shared.getAnnonceurToken();
     console.log(token);
     const data = { email, nom: team };
     console.log(data);
@@ -77,11 +77,10 @@ export class TeamService {
     return this.http.delete(url, { body });
   }
 
-  acceptInvitation(code: string) : Observable<string>{
-    {
-      const url = `${this.urlMembre}acceptInvitation`;
-      const body = { code };
-      return this.http.post<string>(url, body);
-    }
+  getTeamsByAnnonceur(email: string): Observable<any> {
+    const url = `${this.urlAdmin}getTeamsByAnnonceur/${email}`;
+    return this.http.get(url);
   }
+
+
 }

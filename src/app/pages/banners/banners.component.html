@@ -1,26 +1,60 @@
 <main id="main" class="main">
   <div class="container">
-    <h3>Liste des bannières de chaque campagne publicitaire</h3>
+    <h3>Liste des bannières de la campagne publicitaire</h3>
     <div class="pagetitle" style="padding-bottom: 40px;">
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a routerLink="/">Accueil</a></li>
+          <li class="breadcrumb-item"><a routerLink="/campagnes">Campgnes</a></li>
           <li class="breadcrumb-item active">Bannières</li>
         </ol>
       </nav>
     </div>
     <div>
       <input class="input1" type="text" [(ngModel)]="searchText" placeholder="Chercher votre bannière">
-      <button class="button1" data-bs-toggle="modal" data-bs-target="#largeModal">Créer une bannière</button>
-      <div class="row align-items-top">
-        <div class="card" *ngFor="let banner of getPaginatedBanners(); let i = index">
-          <div class="card-body">
-            <h5 class="card-title">{{ banner.nom }}</h5>
-            <img class="image" [src]="'data:image/jpeg;base64,' + banner.image" class="d-block w-100" alt="..." (click)="onCarouselClick(banner.id)"/>
+      <button type="button" class="button1" data-bs-toggle="modal" data-bs-target="#largeModal">Créer une
+        bannière</button>
+      <div class="filter">
+        <label style="font-size: 20px; margin-right: 10px;">Filter par:</label>
+        <select [(ngModel)]="selectedStatus">
+          <option value="">Tout</option>
+          <option value="par éditeur">Créée par éditeur</option>
+          <option value="par téléchargement">Créée par téléchargement</option>
+        </select>
+      </div>
+
+      <ng-container *ngIf="isLoadingBanners; else bannersLoadedTemplate">
+        <div class="spinner-border text-primary" role="status"> <span class="visually-hidden">Chargement en cours...</span></div>
+      </ng-container>
+      <ng-template #bannersLoadedTemplate>
+
+        <div class="row align-items-top" *ngIf="banners.length > 0; else noBanners">
+          <div class="card" *ngFor="let banner of getPaginatedBanners(); let i = index">
+            <div class="card-body">
+              <div class="card-title-wrapper">
+                <h5 class="card-title" style="margin-right: 100px;">{{ banner.nom }}</h5>
+                <div class="dropdown">
+                  <span class="dropdown-btn"><i class="bi bi-three-dots-vertical"></i></span>
+                  <div class="dropdown-content">
+                    <button class="buttonr" (click)="onCarouselClick(banner.id)">Voir bannière</button>
+                    <button class="buttonr" (click)="deleteBanner(banner.nom_campagne, banner.nom)">Supprimer bannière</button>
+                    <button class="buttonr"routerLink="/rapport/{{banner.nom_campagne}}/{{banner.nom}}" [disabled]="typeOffre !== 'Premium'" [class.locked-link]="typeOffre !== 'Premium'">
+                      Voir Rapport
+                      <i class="bi bi-lock" *ngIf="typeOffre !== 'Premium'"></i>
+                    </button>
+                    
+                    
+                  
+                  </div>
+                </div>
+              </div>
+
+              <img class="image" [src]="'data:image/jpeg;base64,' + banner.image" class="d-block w-100" alt="..."
+                (click)="onCarouselClick(banner.id)" />
+            </div>
           </div>
         </div>
-      </div>
-      
+
+      </ng-template>
 
 
       <div class="pagination">
@@ -31,45 +65,60 @@
       </div>
     </div>
   </div>
+  <ng-template #noBanners>
+    <section class="section min-vh-100 d-flex flex-column align-items-center justify-content-center">
+      <div class="col-lg-6">
+        <h2>Pas de bannières publicitaires 😵</h2>
+      </div>
+    </section>
+  </ng-template>
 </main>
 
-<form>
-  <div class="modal fade" id="largeModal" tabindex="-1">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" >Faites un choix🤩</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-            fdprocessedid="rus26i"></button>
-        </div>
-        <div class="modal-body">
-          <div class="row">
-            <div class="col-md-6" (click)="navigateToUpload()">
-              <div class="card mb-1" style="margin-left: 55px;">
+<div class="modal fade" id="largeModal" tabindex="-1" (submit)="getNomCampagne()">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Faites un choix🤩</h5>        
 
-                <div class="card-body">
-                  <img src="assets/img/image3.png" alt="..." class="d-block w-100">
-                </div>
-                <div class="card-footer">
-                  <button data-bs-dismiss="modal" class="button2">Télécharger une bannière</button> 
-                </div>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+          fdprocessedid="rus26i"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+
+          <div class="col-md-6" routerLink="/téléchargerBannière/{{nom_campagne}}">
+            <div class="card mb-1" style="margin-left: 55px;">
+              <div class="card-body">
+                <img src="assets/img/image3.png" alt="..." class="d-block w-100">
               </div>
-            </div>
-
-
-            <div class="col-md-6" (click)="navigateToDesign()">
-              <div class="card mb-12">
-                <div class="card-body">
-                  <img src="assets/img/image2.png" alt="..." class="d-block w-100">
-                </div>
-                <div class="card-footer">
-                  <button class="button2" data-bs-dismiss="modal">Concevoir une bannière</button> 
-                </div>
+              <div class="card-footer">
+                <button data-bs-dismiss="modal" class="button2">Télécharger une bannière</button>
               </div>
             </div>
           </div>
+         
+          <div class="col-md-6" routerLink="/design/{{nom_campagne}}">
+            <div class="card mb-12" [class.disabled-card]="typeOffre === 'Essentiel'">
+              <div class="card-body">
+                <div class="image-wrapper">
+                  <img src="assets/img/image2.png" alt="..." class="d-block w-100">
+                  <div class="lock-overlay" *ngIf="typeOffre === 'Essentiel'">
+                    <i class="fa fa-lock" style="font-size: 50px;"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer" >
+                <button class="button2" data-bs-dismiss="modal" [disabled]="typeOffre === 'Essentiel'">Concevoir une bannière</button>
+              </div>
+              
+            </div>
+          </div>
+          
+          
+
+
         </div>
       </div>
     </div>
   </div>
-</form>
+</div>

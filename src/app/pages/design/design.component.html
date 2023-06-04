@@ -1,202 +1,185 @@
-<main class="main">
-    <mat-toolbar color="primary"> Banner editor </mat-toolbar>
-    <div class="main__content container">
-        <div class="preview _container">
-            <div class="body-preview__wrap">
-                <div class="preview__body body-preview" #content>
-                    <div #screen class="preview__body-content" [ngStyle]="dynamicPreviewStyle">
-                        <div class="body-content-bgimage" [ngStyle]="dynamicBgImage">
-                            <pre #pre [ngStyle]="dynamicPreStyle">{{
-                  parameterForm.get("text")?.value
-                }}</pre>
-                            <a [href]="'http://' + parameterForm.get('link')?.value" class="banner-link" target="_blank"
-                                style="display: block; height: 100%"></a>
-                        </div>
-                    </div>
-                </div>
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+    }
+
+    html {
+      overscroll-behavior-x: contain;
+    }
+
+    .ubq-light {
+      --ubq-elevation-3: #9155fd;
+      --ubq-elevation-2: #ffff;
+      --ubq-elevation-1: #ffff;
+      --ubq-canvas: hsl(283, 78%, 96%);
+      --ubq-foreground-default: hsla(210, 30%, 10%, 0.9);
+      --ubq-foreground-light: hsla(210, 30%, 10%, 0.7);
+      --ubq-foreground-info: hsla(210, 30%, 10%, 0.5);
+      --ubq-foreground-active: hsla(210, 0%, 100%, 0.9);
+      --ubq-foreground-accent: hsla(210, 0%, 100%, 1);
+      --ubq-foreground-danger: hsla(210, 0%, 100%, 1);
+      --ubq-interactive-default: linear-gradient(to bottom, hsla(0, 0%, 100%, 0.4), hsla(0, 0%, 100%, 0)), hsla(0, 0%, 100%, 0.85);
+      --ubq-interactive-hover: linear-gradient(to bottom, hsla(0, 0%, 100%, 0.5), hsla(0, 0%, 100%, 0)), hsla(0, 0%, 100%, 0.4);
+      --ubq-interactive-pressed: hsla(0, 0%, 100%, 0.4);
+      --ubq-interactive-selected: linear-gradient(to bottom, hsla(0, 0%, 100%, 0.6), hsla(0, 0%, 100%, 0)), hsla(0, 0%, 100%, 0.6);
+      --ubq-interactive-active-default: linear-gradient(to bottom, hsla(0, 0%, 100%, 0.1), hsla(0, 0%, 100%, 0)), hsla(210, 60%, 5%, 0.75);
+      --ubq-interactive-active-hover: linear-gradient(to bottom, hsla(0, 0%, 100%, 0.1), hsla(0, 0%, 100%, 0)), hsla(210, 60%, 5%, 0.65);
+      --ubq-interactive-active-pressed: hsla(210, 60%, 5%, 0.65);
+      --ubq-interactive-accent-default: linear-gradient(180deg, hsla(0, 0%, 100%, 0.06), hsla(0, 0%, 100%, 0)), hsla(230, 90%, 60%, 1);
+      --ubq-interactive-accent-hover: linear-gradient(180deg, hsla(0, 0%, 100%, 0.06), hsla(0, 0%, 100%, 0)), hsla(230, 90%, 60%, 0.9);
+      --ubq-interactive-accent-pressed: hsla(230, 90%, 60%, 0.9);
+      --ubq-interactive-danger-default: linear-gradient(180deg, hsla(0, 0%, 100%, 0.15), hsla(0, 0%, 100%, 0)), hsla(338, 64%, 51%, 0.8);
+      --ubq-interactive-danger-hover: linear-gradient(180deg, hsla(0, 0%, 100%, 0.15), hsla(0, 0%, 100%, 0)), hsla(338, 64%, 51%, 0.65);
+      --ubq-interactive-danger-pressed: hsla(338, 64%, 51%, 0.65);
+      --ubq-interactive-template-default: linear-gradient(180deg, hsla(0, 0%, 100%, 0.1), hsla(0, 0%, 100%, 0)), hsla(274, 97%, 50%, 0.5);
+      --ubq-interactive-template-hover: linear-gradient(180deg, hsla(0, 0%, 100%, 0.1), hsla(0, 0%, 100%, 0)), hsla(274, 97%, 50%, 0.45);
+      --ubq-interactive-template-pressed: hsla(274, 97%, 50%, 0.45);
+      --ubq-input-default: linear-gradient(to bottom, hsla(0, 0%, 0%, 0.04), hsla(0, 0%, 0%, 0)), hsla(0, 0%, 0%, 0.04);
+      --ubq-input-hover: linear-gradient(to bottom, hsla(0, 0%, 0%, 0.04), hsla(0, 0%, 0%, 0)), hsla(0, 0%, 0%, 0.08);
+      --ubq-interactive-group-default: hsla(208, 29%, 10%, 0);
+      --ubq-interactive-group-hover: hsla(208, 29%, 10%, 0.04);
+      --ubq-interactive-group-active-default: hsla(208, 29%, 10%, 0.08);
+      --ubq-interactive-group-active-hover: hsla(208, 29%, 10%, 0.12);
+      --ubq-progress: hsla(210, 30%, 10%, 0.7);
+      --ubq-border-default: hsla(210, 0%, 100%, 0.4);
+      --ubq-stroke-contrast-1: hsla(210, 30%, 10%, 0.12);
+      --ubq-stroke-contrast-2: hsla(210, 30%, 10%, 0.25);
+      --ubq-stroke-contrast-3: hsla(210, 30%, 10%, 0.9);
+      --ubq-focus-default: hsl(230, 100%, 60%);
+      --ubq-focus-outline: hsl(210, 10%, 85%);
+      --ubq-overlay: hsla(210, 10%, 85%, 0.8);
+      --ubq-notice-info: hsla(210, 30%, 10%, 1);
+      --ubq-notice-success: hsla(166, 90%, 37%, 1);
+      --ubq-notice-warning: hsla(40, 100%, 37%, 1);
+      --ubq-notice-error: hsla(338, 64%, 51%, 1);
+      --ubq-effect-shadow: 0px 4px 16px -4px hsla(210, 27%, 9%, 0.14), 0px 1px 20px -4px hsla(210, 27%, 9%, 0.12), 0px 2px 12px -4px hsla(210, 27%, 9%, 0.2);
+      --ubq-effect-focus: 0 0 0 calc(var(--ubq-scale-base) / 2 - 0.01px) var(--ubq-focus-outline), 0 0 0 var(--ubq-scale-base) var(--ubq-focus-default)
+    }
+
+    /* Modal styles */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      visibility: visible;
+      opacity: 1;
+      transition: visibility 0s, opacity 0.3s ease-in-out;
+    }
+
+    .modal.hidden {
+      visibility: hidden;
+      opacity: 0;
+      transition: visibility 0s, opacity 0.3s ease-in-out;
+    }
+
+    .modal-content {
+      background-color: #fefefe;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="modal" [hidden]="!showModal" id="largeModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title">Saisir les informations sur votre bannière</h3>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"  aria-label="Close" (click)="closeModal()"
+            fdprocessedid="ee0oo"></button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="nom">Nom de la bannière:</label>
+            <input type="text" name="nom" class="form-control" [(ngModel)]="banner.nom" id="nom">
+          </div>
+          <div class="form-group">
+            <label for="description">Description:</label>
+            <input type="text" name="description" class="form-control"  [(ngModel)]="banner.description" id="description">
+          </div>
+          <div class="form-group row">
+            <div class="col-sm-6">
+              <label for="startDate">Date de début:</label>
+              <input type="date" name="startDate" class="form-control" [(ngModel)]="banner.startDate" id="startDate">
             </div>
-            <div class="link-input" [formGroup]="parameterForm" *ngIf="dynamicStyle$ | async">
-                <mat-form-field appearance="fill">
-                    <mat-label>Entrez l'url sans http://</mat-label>
-                    <input matInput type="text" formControlName="link" required />
-                    <mat-error *ngIf="parameterForm.get('link')?.invalid">{{
-                        getErrorMessageLink()
-                        }}</mat-error>
-                </mat-form-field>
+            <div class="col-sm-6">
+              <label for="endDate">Date de fin:</label>
+              <input type="date" name="endDate" class="form-control" [(ngModel)]="banner.endDate" id="endDate">
             </div>
-            <div class="export">
-                <div class="export__buttons" #container>
-                    <button mat-stroked-button color="accent" (click)="downloadImage()"
-                        [disabled]="parameterForm.invalid">
-                        в PNG <mat-icon>save_alt</mat-icon>
-                    </button>
-                    <button mat-raised-button color="primary" (click)="copyContent()"
-                        [disabled]="parameterForm.invalid">
-                        в HTML <mat-icon>file_copy</mat-icon>
-                    </button>
-                    <button mat-raised-button color="link" (click)="copyConfig()" [disabled]="parameterForm.invalid">
-                        в JSON <mat-icon>content_copy</mat-icon>
-                    </button>
-                </div>
+          </div>
+          <div class="form-group row">
+            <h5>
+              Choisissez l'horaire de diffusion de votre bannière publicitaire dans l'application Ijeni.</h5>
+            <div class="col-sm-6">
+              <label for="startTime">Heure de début:</label>
+              <input type="time" name="startTime" class="form-control" [(ngModel)]="banner.startTime" id="startTime">
             </div>
+            <div class="col-sm-6">
+              <label for="endTime">Heure de fin:</label>
+              <input type="time" name="endTime" class="form-control" [(ngModel)]="banner.endTime" id="endTime">
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-sm-6">
+              <label for="title">Titre:</label>
+              <input type="text" name="title" class="form-control" [(ngModel)]="banner.title"id="title">
+            </div>
+            <div class="col-sm-6">
+              <label for="subtitle">Sous-titre:</label>
+              <input type="text" name="subtitle" class="form-control" [(ngModel)]="banner.subtitle" id="subtitle">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="callToAction">Appel à l'action:</label>
+            <input type="callToAction" name="callToAction" class="form-control" [(ngModel)]="banner.callToAction" id="callToAction" placeholder="www.exemple.com">
+          </div>
+          <div class="form-group">
+            <label for="plateformeType">Type d'application:</label>
+            <select id="plateformeType" name="plateformeType" class="form-control" [(ngModel)]="banner.plateformeType">
+              <option value="" disabled selected>Sélectionnez l'application d'Ijeni</option>
+              <option value="desktop">Application Mobile</option>
+              <option value="mobile">Site web</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="placeholder">Zone de la bannière:</label>
+            <select id="placeholder" name="placeholder" class="form-control"[(ngModel)]="banner.placeholder">
+              <option value="" disabled selected>Choisissez votre zone de la bannière sur Ijeni.tn</option>
+              <option value="desktop">Page d'acceuil</option>
+              <option value="mobile">Page de catégories</option>
+            </select>
+          </div>
+
+        </div>
+        <div class="modal-footer"> <button type="button" class="btn btn-secondary" (click)="closeModal()"
+            data-bs-dismiss="modal">Ignorer</button> <button type="button" class="btn btn-primary" (click)="createBanner()">Enregistrer</button>
         </div>
 
-        <div class="parameters _container">
-            <mat-grid-list cols="8" rowHeight="fit" gutterSize="2px" [formGroup]="parameterForm"
-                class="parameter__content content-parameter">
-
-                <mat-grid-tile colspan="8" rowspan="1" class="title">
-                    Définition des dimensions de mise en page en pixels </mat-grid-tile>
-                <mat-grid-tile colspan="3" rowspan="1" class="content-size__item">
-                    <mat-label class="size-label" for="horizontal">
-                        Largeur de mise en page :
-                    </mat-label>
-                    <mat-form-field class="size-input">
-                        <input matInput type="number" min="100" max="500" formControlName="width" />
-                    </mat-form-field>
-                </mat-grid-tile>
-                <mat-grid-tile colspan="1" rowspan="1"> </mat-grid-tile>
-                <mat-grid-tile colspan="3" rowspan="1" class="content-size__item">
-                    <mat-label class="size-label" for="vertical">
-                        Hauteur de mise en page : </mat-label>
-                    <mat-form-field class="size-input">
-                        <input matInput id="vertical" type="number" min="100" max="500" formControlName="height" />
-                    </mat-form-field>
-                </mat-grid-tile>
-
-                <!-- Options d'image de bannière -->
-                <mat-grid-tile colspan="8" rowspan="1" class="title">Options d'image d'arrière-plan</mat-grid-tile>
-                <mat-grid-tile colspan="3" rowspan="1" class="content-parameter__image">
-                    <mat-form-field class="mat-form-upload">
-                        <mat-label>Choisissez une image</mat-label>
-                        <ngx-mat-file-input id="uploadImage" formControlName="bgImage" (change)="previewFile($event)">
-                        </ngx-mat-file-input>
-                        <mat-icon matSuffix>folder</mat-icon>
-                    </mat-form-field>
-                </mat-grid-tile>
-
-                <mat-grid-tile colspan="2" rowspan="1" class="image-position">
-                    <mat-form-field appearance="fill" class="input-image-position">
-                        <mat-label>Emplacement</mat-label>
-                        <mat-select disableRipple formControlName="imgPosition">
-                            <mat-option *ngFor="let position of bgPosOptions" [value]="position[1]">
-                                {{ position[0] }}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </mat-grid-tile>
-                <mat-grid-tile colspan="1" rowspan="1"> </mat-grid-tile>
-                <mat-grid-tile colspan="2" rowspan="1" class="image-position">
-                    <mat-form-field appearance="fill" class="input-image-position">
-                        <mat-label>Taille</mat-label>
-                        <mat-select formControlName="imgCover">
-                            <mat-option>original</mat-option>
-                            <mat-option *ngFor="let size of bgSizeOptions" [value]="size[1]">
-                                {{ size[0] }}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </mat-grid-tile>
-
-                <!-- Options de couleur d'arrière-plan -->
-                <mat-grid-tile colspan="8" rowspan="1" class="title">Options de couleur d'arrière-plan</mat-grid-tile>
-
-                <mat-grid-tile colspan="2" rowspan="1">
-                    <mat-checkbox id="gradient" formControlName="bgGradient">Ajouter un dégradé</mat-checkbox>
-                </mat-grid-tile>
-                <mat-grid-tile colspan="4" rowspan="1"></mat-grid-tile>
-
-                <mat-grid-tile colspan="1" rowspan="3" class="choose-bg-color-grad"
-                    *ngIf="parameterForm.get('bgGradient')?.value">
-                    <label for="direction"> Sens du dégradé </label>
-                    <mat-slider thumbLabel id="direction" formControlName="colorDirection" [displayWith]="formatLabel"
-                        vertical="true" min="0" max="360"></mat-slider>
-                </mat-grid-tile>
-                <mat-grid-tile colspan="5" rowspan="2">
-                    <mat-form-field class="choose-bg-color choose-color" appearance="fill">
-                        <label for="colorFrom"> Couleur de l'arrière plan </label>
-                        <input matInput id="colorFrom" class="choice-color color-input" [(colorPicker)]="defaultColor"
-                            [style.background]="defaultColor" (colorPickerChange)="onChangeFirstColor($event)"
-                            formControlName="bgColorFrom" />
-                    </mat-form-field>
-
-                    <mat-form-field class="choose-bg-color-grad choose-color" appearance="fill"
-                        *ngIf="parameterForm.get('bgGradient')?.value">
-                        <label for="colorTo"> Deuxième couleur de fond </label>
-                        <input matInput id="colorTo" class="choice-color color-input"
-                            [(colorPicker)]="defaultGradientColor" [style.background]="defaultGradientColor"
-                            (colorPickerChange)="onChangeSecondColor($event)" formControlName="bgColorTo" />
-                    </mat-form-field>
-                </mat-grid-tile>
-                <mat-grid-tile colspan="1" rowspan="2"></mat-grid-tile>
-
-                <!-- Параметры текста -->
-                <mat-grid-tile colspan="8" rowspan="1" class="title">Paramètres de saisie de texte et de
-                    positionnement</mat-grid-tile>
-
-                <mat-grid-tile colspan="5" rowspan="2" class="text-option__input">
-                    <mat-form-field appearance="fill" class="text-field-wrap">
-                        <mat-label>Saisir le texte de la bannière</mat-label>
-                        <textarea matInput id="text" class="text-field" [placeholder]="textAreaPlaceholder" rows="3"
-                            formControlName="text"></textarea>
-                        <mat-error *ngIf="
-                  parameterForm.hasError('required', 'text') &&
-                  parameterForm.controls['text'].touched
-                ">
-                            Ce champ est obligatoire </mat-error>
-                    </mat-form-field>
-                </mat-grid-tile>
-
-                <mat-grid-tile colspan="3" rowspan="2" class="text-option__input" class="text-option__positioning">
-                    <div class="position-option">
-                        <h4 class="mat-h4">Positionnement vertical</h4>
-                        <button mat-stroked-button color="primary" (mousedown)="decreaseStart($event)"
-                            (mouseup)="decreaseStop($event)" (mouseleave)="decreaseStop($event)">
-                            En haut
-                        </button>
-                        <button mat-stroked-button color="primary" (mousedown)="increaseStart($event)"
-                            (mouseup)="increaseStop($event)" (mouseleave)="increaseStop($event)">
-                            En bas
-                        </button>
-                    </div>
-                </mat-grid-tile>
-
-                <mat-grid-tile colspan="4" rowspan="2">
-                    <mat-form-field appearance="fill" class="color-text">
-                        <label for="color-text"> Couleur du texte </label>
-                        <input matInput id="color-text" class="choice-color" [(colorPicker)]="defaultTextColor"
-                            [style.background]="defaultTextColor" (colorPickerChange)="onChangeTextColor($event)"
-                            formControlName="textColor" />
-                    </mat-form-field>
-                </mat-grid-tile>
-
-                <mat-grid-tile colspan="4" rowspan="2" class="text-width-input">
-                    <mat-label for="width-text"> Largeur du texte </mat-label>
-                    <mat-slider #widthTextValue thumbLabel id="width-text" formControlName="widthText"
-                        [displayWith]="formatLabelWidth" min="50" [max]="parameterForm.get('width')?.value">
-                    </mat-slider>
-                </mat-grid-tile>
-
-                <mat-grid-tile colspan="2" rowspan="1" class="setting-option__items"
-                    *ngFor="let item of textConfigList">
-                    <mat-form-field appearance="fill" class="item-option">
-                        <mat-label>{{ item.default }}</mat-label>
-                        <mat-select formControlName="{{ item.control }}">
-                            <mat-option *ngFor="let value of item.selectValue; let i = index"
-                                [value]="item.styleValue[i]">
-                                {{ value }}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </mat-grid-tile>
-                <mat-grid-tile colspan="2" rowspan="1">
-                    <mat-button-toggle-group value="left" (change)="textLayoutChange($event)">
-                        <mat-button-toggle *ngFor="let item of textLayout" [value]="item.value">
-                            <mat-icon>{{ item.icon }}</mat-icon>
-                        </mat-button-toggle>
-                    </mat-button-toggle-group>
-                </mat-grid-tile>
-            </mat-grid-list>
-        </div>
+      </div>
     </div>
-</main>
+  </div>
+
+  <div #cesdk_container [ngStyle]="{'height.vh': '100', 'width.vw': '100'}"></div>
+  <script type="module" src="index.js">
+  </script>
+</body>
+
+
+</html>

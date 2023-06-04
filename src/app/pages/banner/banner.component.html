@@ -16,9 +16,8 @@
                   <h2>{{nom}}</h2>
                   <img [src]="'data:image/jpeg;base64,' + image" alt="..." class="d-block w-100">
                   <div class="pt-2" data-bs-target="#banner_edit">
-                     <a href="#" class="btn btn-primary btn-sm" title="Upload new banner image">
-                        <i class="bi bi-upload"></i></a> <a href="#" class="btn btn-danger btn-sm"
-                        title="Remove my banner">
+                     <a class="btn btn-danger btn-sm"
+                        title="Supprimer ma bannière" (click)="deleteBanner(nom_campagne,nom)">
                         <i class="bi bi-trash"></i></a>
                   </div>
                </div>
@@ -74,14 +73,30 @@
                               <div class="row mb-3">
                                  <label for="description" class="col-md-4 col-lg-3 col-form-label">Description</label>
                                  <div class="col-md-8 col-lg-9">
-                                    <input name="description" type="text" class="form-control" id="description"
-                                       [(ngModel)]="description" readonly>
+                                    <textarea name="description" type="text" class="form-control" id="description"
+                                       [(ngModel)]="description" readonly></textarea>
                                  </div>
                               </div>
 
 
                               <div class="row mb-3">
-                                 <label for="createdAt" class="col-md-4 col-lg-3 col-form-label">Date de début</label>
+                                 <label for="startDate" class="col-md-4 col-lg-3 col-form-label">Date de début</label>
+                                 <div class="col-md-8 col-lg-9">
+                                    <input name="startDate" type="text" class="form-control" id="startDate"
+                                       [(ngModel)]="startDate" readonly>
+                                 </div>
+                              </div>
+
+                              <div class="row mb-3">
+                                 <label for="createdAt" class="col-md-4 col-lg-3 col-form-label">Date de fin</label>
+                                 <div class="col-md-8 col-lg-9">
+                                    <input name="endDate" type="text" class="form-control" id="endDate"
+                                       [(ngModel)]="endDate" readonly>
+                                 </div>
+                              </div>
+
+                              <div class="row mb-3">
+                                 <label for="createdAt" class="col-md-4 col-lg-3 col-form-label">Date de création</label>
                                  <div class="col-md-8 col-lg-9">
                                     <input name="createdAt" type="text" class="form-control" id="createdAt"
                                        [(ngModel)]="createdAt" readonly>
@@ -164,16 +179,21 @@
                               </div>
                            </div>
 
-
                            <div class="row mb-3">
-                              <label for="createdAt" class="col-md-4 col-lg-3 col-form-label">Date de début</label>
+                              <label for="startDate" class="col-md-4 col-lg-3 col-form-label">Date de début</label>
                               <div class="col-md-8 col-lg-9">
-                                 <input name="createdAt" type="text" class="form-control" id="createdAt"
-                                    [(ngModel)]="createdAt">
+                                 <input name="startDate" type="text" class="form-control" id="startDate"
+                                    [(ngModel)]="startDate">
                               </div>
                            </div>
 
-
+                           <div class="row mb-3">
+                              <label for="createdAt" class="col-md-4 col-lg-3 col-form-label">Date de fin</label>
+                              <div class="col-md-8 col-lg-9">
+                                 <input name="endDate" type="text" class="form-control" id="endDate"
+                                    [(ngModel)]="endDate">
+                              </div>
+                           </div>
                         </form>
                      </div>
                   </div>

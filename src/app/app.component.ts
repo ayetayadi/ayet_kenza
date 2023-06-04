@@ -1,5 +1,5 @@
 import { Component ,ElementRef} from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
   title = 'admindashboard';
-  constructor(private elementRef: ElementRef,  public  _router: Router) { }
+  constructor(private elementRef: ElementRef,  public  _router: Router, public _route: ActivatedRoute) { }
 
   ngOnInit() {
 

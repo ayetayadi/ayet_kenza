@@ -16,6 +16,14 @@ body {
     background: #F4F5FA;
     ;
 }
+.wrapper .logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-left: 20px;
+}
+
 
 ::selection {
     color: #fff;

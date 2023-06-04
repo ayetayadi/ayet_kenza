@@ -19,6 +19,8 @@ export class BannerComponent implements OnInit {
   height: string = '';
   createdAt: string = '';
   updatedAt: string = '';
+  startDate: string = '';
+  endDate: string = '';
   title: string = '';
   subtitle: string = '';
   htmlcode: string = '';
@@ -49,6 +51,10 @@ export class BannerComponent implements OnInit {
         console.log(this.height)
         this.width = response.width;
         console.log(this.width)
+        this.startDate = response.startDate.replace(/T\d{2}-\d{2}-\d{2}\.\d{3}Z/, '');
+        console.log(this.startDate)
+        this.endDate = response.endDate.replace(/T\d{2}-\d{2}-\d{2}\.\d{3}Z/, '');
+        console.log(this.endDate)
         this.createdAt = response.createdAt.replace(/T\d{2}-\d{2}-\d{2}\.\d{3}Z/, '');
         console.log(this.createdAt)
         this.title = response.title;
@@ -77,4 +83,19 @@ export class BannerComponent implements OnInit {
     document.body.removeChild(textarea);
  }
  
+ 
+ deleteBanner(nom_campagne: string, nom: string): void {
+  if (window.confirm(`Êtes-vous sûr de vouloir supprimer la bannière ${nom} de la campagne publicitare ${nom_campagne}?`)) {
+    this.bannerService.deleteBanner(nom_campagne,nom)
+      .subscribe(
+        res => {
+          console.log(res);
+          alert(`Suppression de la bannière ${nom} avec succés`);
+        },
+        err => {
+          console.error(err);
+        }
+      );
+  }
+}
 }

@@ -22,7 +22,7 @@ h3 {
     margin-top: 20px;
     border-radius: 5px;
     padding-left: 20px;
-    margin-left: 460px; 
+    margin-left: 510px; 
 
     
 }
@@ -83,7 +83,7 @@ tbody tr:hover {
     background-color: transparent;
     border: none;
     color: #9155FD;
-    padding: 12px 5px;
+    padding: 5px 5px;
     font-size: 25px;
     cursor: pointer;
     display: inline-block;

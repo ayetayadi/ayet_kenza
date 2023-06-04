@@ -3,7 +3,7 @@
         <h1>Equipes</h1>
         <nav>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a routerLink="/">Accueil</a></li>
+                <li class="breadcrumb-item"><a routerLink="/acceuilannonceur">Accueil</a></li>
                 <li class="breadcrumb-item active">Equipes</li>
             </ol>
         </nav>
@@ -24,14 +24,15 @@
                                     <a routerLink="/equipes/{{ equipe.nom }}/membres">{{ equipe.nom }}</a>
                                 </h2>
                                 <div class="cardb">
-                                    <button class="card-btn" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#basicModal3" (click)="selectedEquipe = equipe"><i
-                                            class="fa fa-plus"></i></button>
-                                    <button class="card-btn btn1" (click)="deleteTeam(equipe)"><i
-                                            class="fa fa-trash"></i></button>
+                                    <button class="card-btn" type="button"
+                                        routerLink="/equipes/{{ equipe.nom }}/membres"><i
+                                            class="bi bi-eye"></i></button>
+
                                     <button class="card-btn btn2" type="button" data-bs-toggle="modal"
                                         data-bs-target="#basicModal2" (click)="selectedEquipe = equipe"><i
-                                            class="fa fa-edit"></i></button>
+                                            class="bi bi-pencil"></i></button>
+                                    <button class="card-btn btn1" (click)="deleteTeam(equipe)"> <i
+                                            class="bi bi-trash"></i></button>
                                 </div>
                             </div>
                         </div>
@@ -45,7 +46,8 @@
         <section class="section min-vh-100 d-flex flex-column align-items-center justify-content-center">
             <div class="col-lg-5">
                 <h2>Aucune équipe trouvée 👥</h2>
-                <button class="btn3" type="button" data-bs-toggle="modal" data-bs-target="#basicModal1"><i class="fa fa-plus"></i> Créer une équipe</button>
+                <button class="btn3" type="button" data-bs-toggle="modal" data-bs-target="#basicModal1"><i
+                        class="fa fa-plus"></i> Créer une équipe</button>
             </div>
         </section>
     </ng-template>
@@ -58,15 +60,24 @@
         <div class="modal-dialog ">
             <div class="modal-content">
                 <div class="modal-header">
+                    <h3>Créer une nouvelle équipe</h3>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+
                 <div class="modal-body">
-                    <div class="field name">
+                    <div class="field name" style="margin-bottom: 20px;">
                         <div class="input-area">
-                            <input name="teamName" type="text" placeholder="Nom d'équipe" [(ngModel)]="teamName"
+                            <i class="icon bi bi-people"></i>
+                            <input name="teamName" type="text" placeholder="  Nom d'équipe" [(ngModel)]="teamName"
                                 required>
-                            <i class="icon fa fa-group"></i>
                         </div>
+                    </div>
+                    <div>
+                        <select name="nomCampagne" [(ngModel)]="nomCampagne">
+                            <option value="">Choisir votre campagne publicitaire</option>
+                            <option *ngFor="let campagne of campagnes" [value]="campagne.nom" [(ngModel)]="nomCampagne">
+                                {{ campagne.nom }}</option>
+                        </select>
                     </div>
                     <button type="button1" class="button1" (click)="createTeam()">Créer</button>
                 </div>
@@ -88,7 +99,7 @@
                         <div class="input-area">
                             <input name="teamName" type="text" placeholder="Nouveau nom d'équipe"
                                 [(ngModel)]="newTeamName" required>
-                            <i class="icon fa fa-group"></i>
+                            <i class="bi bi-people"></i>
                         </div>
                     </div>
                     <button type="button" class="button2" (click)="updateTeam()">Modifier</button>

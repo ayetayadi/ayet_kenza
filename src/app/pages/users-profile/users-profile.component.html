@@ -1,10 +1,9 @@
 <main id="main" class="main">
    <div class="pagetitle">
-      <h1>Profile</h1>
+      <h1>Profil</h1>
       <nav>
          <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a routerLink="/">Acceuil</a></li>
-            <li class="breadcrumb-item">Annonceur</li>
+            <li class="breadcrumb-item"><a routerLink="/acceuilannonceur">Acceuil</a></li>
             <li class="breadcrumb-item active">Profil</li>
          </ol>
       </nav>
@@ -17,10 +16,7 @@
                   <img src="assets/img/profile_image.webp" alt="Profile" class="rounded-circle">
                   <h2>{{username}}</h2>
                   <h3>Annonceur</h3>
-                  <div class="social-links mt-2"> <a href="#" class="twitter"><i class="bi bi-twitter"></i></a> <a
-                        href="#" class="facebook"><i class="bi bi-facebook"></i></a> <a href="#" class="instagram"><i
-                           class="bi bi-instagram"></i></a> <a href="#" class="linkedin"><i
-                           class="bi bi-linkedin"></i></a></div>
+                 
                </div>
             </div>
          </div>
@@ -29,13 +25,12 @@
                <div class="card-body pt-3">
                   <ul class="nav nav-tabs nav-tabs-bordered">
                      <li class="nav-item"> <button class="nav-link active" data-bs-toggle="tab"
-                           data-bs-target="#profile-overview">Overview</button></li>
+                           data-bs-target="#profile-overview">Vue d'ensemble</button></li>
                      <li class="nav-item"> <button class="nav-link" data-bs-toggle="tab"
                            data-bs-target="#profile-edit">Editer votre Profile</button></li>
                      <li class="nav-item"> <button class="nav-link" data-bs-toggle="tab"
-                           data-bs-target="#profile-settings">Settings</button></li>
-                     <li class="nav-item"> <button class="nav-link" data-bs-toggle="tab"
-                           data-bs-target="#profile-change-password">Change Password</button></li>
+                           data-bs-target="#profile-settings">Voir factures</button></li>
+                  
                   </ul>
                   <div class="tab-content pt-2">
                      <div class="tab-pane fade show active profile-overview" id="profile-overview">
@@ -49,6 +44,11 @@
                            <div class="col-lg-9 col-md-8">{{email}}</div>
                         </div>
                         <div class="row">
+                           <div class="col-lg-3 col-md-4 label">Date de Naissance</div>
+                           <div class="col-lg-9 col-md-8">{{ dateNaiss | date: 'yyyy-MM-dd' }}</div>
+                         </div>
+                         
+                        <div class="row">
                            <div class="col-lg-3 col-md-4 label">Télephone</div>
                            <div class="col-lg-9 col-md-8">{{tel}}</div>
                         </div>
@@ -61,17 +61,21 @@
                            <div class="col-lg-9 col-md-8">{{emailE}}</div>
                         </div>
                         <div class="row">
+                           <div class="col-lg-3 col-md-4 label">Télephone d'entreprise</div>
+                           <div class="col-lg-9 col-md-8">{{telE}}</div>
+                        </div>
+                        <div class="row">
                            <div class="col-lg-3 col-md-4 label">Domaine d'entreprise</div>
                            <div class="col-lg-9 col-md-8">{{domaineE}}</div>
                         </div>
                         <div class="row">
-                           <div class="col-lg-3 col-md-4 label">Adresse</div>
+                           <div class="col-lg-3 col-md-4 label">Adresse d'entreprise</div>
                            <div class="col-lg-9 col-md-8">{{adresseE}}</div>
                         </div>
 
                      </div>
                      <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
-                        <form (ngSubmit)="updateProfile()">
+                        <form>
                            <div class="row mb-3">
                               <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
                               <div class="col-md-8 col-lg-9">
@@ -93,9 +97,14 @@
                                     id="Email" [(ngModel)]="email"></div>
                            </div>
                            <div class="row mb-3">
-                              <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Télephone</label>
-                              <div class="col-md-8 col-lg-9"> <input name="phone" type="text" class="form-control"
-                                    id="Phone" [(ngModel)]="tel"></div>
+                              <label for="dateNaiss" class="col-md-4 col-lg-3 col-form-label">Date de naissance</label>
+                              <div class="col-md-8 col-lg-9"> <input name="dateNaiss" type="date" class="form-control"
+                                    id="dateNaiss" [(ngModel)]="dateNaiss"></div>
+                           </div>
+                           <div class="row mb-3">
+                              <label for="tel" class="col-md-4 col-lg-3 col-form-label">Télephone</label>
+                              <div class="col-md-8 col-lg-9"> <input name="tel" type="text" class="form-control"
+                                    id="tel" [(ngModel)]="tel"></div>
                            </div>
                            <div class="row mb-3">
                               <label for="company" class="col-md-4 col-lg-3 col-form-label">Nom d'Entreprise</label>
@@ -103,69 +112,64 @@
                                     id="company" [(ngModel)]="nomE"></div>
                            </div>
                            <div class="row mb-3">
-                              <label for="Job" class="col-md-4 col-lg-3 col-form-label">Domaine</label>
-                              <div class="col-md-8 col-lg-9"> <input name="job" type="text" class="form-control"
-                                    id="Job" [(ngModel)]="domaineE"></div>
+                              <label for="EmailE" class="col-md-4 col-lg-3 col-form-label">Email d'entreprise</label>
+                              <div class="col-md-8 col-lg-9"> <input name="emailE" type="email" class="form-control"
+                                    id="EmailE" [(ngModel)]="emailE"></div>
+                           </div>
+                           <div class="row mb-3">
+                              <label for="telE" class="col-md-4 col-lg-3 col-form-label">Télephone d'entreprise</label>
+                              <div class="col-md-8 col-lg-9"> <input name="telE" type="text" class="form-control"
+                                    id="telE" [(ngModel)]="telE"></div>
+                           </div>
+                           <div class="row mb-3">
+                              <label for="domaineE" class="col-md-4 col-lg-3 col-form-label">Domaine d'entreprise</label>
+                              <div class="col-md-8 col-lg-9"> <input name="domaineE" type="text" class="form-control"
+                                    id="domaineE" [(ngModel)]="domaineE"></div>
                            </div>
 
                            <div class="row mb-3">
-                              <label for="Address" class="col-md-4 col-lg-3 col-form-label">Adresse</label>
-                              <div class="col-md-8 col-lg-9"> <input name="address" type="text" class="form-control"
-                                    id="Address" [(ngModel)]="adresseE"></div>
+                              <label for="adresseE" class="col-md-4 col-lg-3 col-form-label">Adresse d'entreprise</label>
+                              <div class="col-md-8 col-lg-9"> <input name="adresseE" type="text" class="form-control"
+                                    id="adresseE" [(ngModel)]="adresseE"></div>
                            </div>
-                           <div class="row mb-3">
-                              <label for="Twitter" class="col-md-4 col-lg-3 col-form-label">Twitter Profile</label>
-                              <div class="col-md-8 col-lg-9"> <input name="twitter" type="text" class="form-control"
-                                    id="Twitter" value="https://twitter.com/#"></div>
-                           </div>
-                           <div class="row mb-3">
-                              <label for="Facebook" class="col-md-4 col-lg-3 col-form-label">Facebook Profile</label>
-                              <div class="col-md-8 col-lg-9"> <input name="facebook" type="text" class="form-control"
-                                    id="Facebook" value="https://facebook.com/#"></div>
-                           </div>
-                           <div class="row mb-3">
-                              <label for="Instagram" class="col-md-4 col-lg-3 col-form-label">Instagram Profile</label>
-                              <div class="col-md-8 col-lg-9"> <input name="instagram" type="text" class="form-control"
-                                    id="Instagram" value="https://instagram.com/#"></div>
-                           </div>
-                           <div class="row mb-3">
-                              <label for="Linkedin" class="col-md-4 col-lg-3 col-form-label">Linkedin Profile</label>
-                              <div class="col-md-8 col-lg-9"> <input name="linkedin" type="text" class="form-control"
-                                    id="Linkedin" value="https://linkedin.com/#"></div>
-                           </div>
-                           <div class="text-center"> <button type="submit" class="btn btn-primary">Enregistrer</button>
+                           <div class="text-center"> <button type="submit" class="btn btn-primary" (click)="updateProfile()">Enregistrer</button>
                            </div>
                         </form>
                      </div>
                      
-                     <div class="tab-pane fade pt-3" id="profile-change-password">
+                       <div class="tab-pane fade pt-3" id="profile-settings">
                         <form>
                            <div class="row mb-3">
-                              <label for="email" class="col-md-4 col-lg-3 col-form-label">
-                                 Email</label>
-                              <div class="col-md-8 col-lg-9">
-                                 <input name="email" type="email" class="form-control" id="email"
-                                    [(ngModel)]="annonceur.email">
-                              </div>
-                           </div>
-                           <div class="row mb-3">
-                              <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current
-                                 Password</label>
-                              <div class="col-md-8 col-lg-9">
-                                 <input name="oldPassword" type="password" class="form-control" id="currentPassword"
-                                    [(ngModel)]="annonceur.oldPassword">
-                              </div>
-                           </div>
-                           <div class="row mb-3">
-                              <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
-                              <div class="col-md-8 col-lg-9">
-                                 <input name="newPassword" type="password" class="form-control" id="newPassword"
-                                    [(ngModel)]="annonceur.newPassword">
-                              </div>
-                           </div>
+                              <table class="table">
+                                 <thead>
+                                     <tr>
+                                         <th scope="col">#</th>
+                                         <th scope="col">Numéro de la facture</th>
+                                         <th scope="col">Nom de l'offre</th>
+                                         <th scope="col">Prix en DT</th>
+                                         <th scope="col">TVA</th>
+                                         <th scope="col">Montant Total</th>
+                                         <th scope="col">Date de paiement</th>
+                                         <th scope="col">Prochaine date de facturation</th>
 
-                           <div class="text-center"> <button type="submit" class="btn btn-primary"
-                                 (click)="changePassword()">Change Password</button></div>
+                                     </tr>
+                                 </thead>
+                                 <tbody>
+                     
+                                     <tr *ngFor="let facture of factures; let i = index">
+                                         <td>{{ (currentPage - 1) * itemsPerPage + i + 1 }}</td>
+                                         <td class="center">#{{facture.num_facture }}</td>
+                                         <td>{{ facture.nom_offre }}</td>
+                                         <td>{{ facture.prixdt }}</td>
+                                         <td>{{ facture.tva }}%</td>
+                                         <td>{{ facture.total }}</td>
+                                         <td>{{ facture.date_paiement  | date: 'yyyy-MM-dd' }}</td>
+                                         <td>{{ facture.dateFin_paiement | date: 'yyyy-MM-dd' }}</td>
+
+                                     </tr>
+                                 </tbody>
+                             </table>
+                           </div>
                         </form>
                      </div>
                   </div>

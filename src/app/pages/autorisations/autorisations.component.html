@@ -1,0 +1,206 @@
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h3>Liste des bannières</h3>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/acceuiladmin">Accueil</a></li>
+                <li class="breadcrumb-item active">Tous les bannières</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="container">
+        <input class="input1" type="text" [(ngModel)]="searchText" placeholder="Chercher Bannière">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nom de la bannière</th>
+                    <th scope="col">Image de la bannière</th>
+                    <th scope="col">Nom de la campagne</th>
+                    <th scope="col">Date de création</th>
+                    <th scope="col">Date de Modification</th>
+                    <th scope="col">Voir détails</th>
+                    <th scope="col">Action</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let autorisation of getPaginatedAuthorizeBanners(); let i = index">
+                    <td>{{ (currentPage - 1) * itemsPerPage + i + 1 }}</td>
+                    <td>{{autorisation.nom}}</td>
+                    <td class="center">
+                        <img [src]="'data:image/jpeg;base64,' + autorisation.image" class="d-block w-50 image"
+                            [class.enlarged-image]="isImageEnlarged" alt="..." (click)="enlargeImage($event)">
+                    </td>
+
+                    <td>{{ autorisation.nom_campagne }}</td>
+                    <td>{{ autorisation.createdAt.slice(0, 10) }}</td>
+                    <td>{{ autorisation.updateAt }}</td>
+                    <td class="center">
+                        <button class="btn btn-detail" data-bs-toggle="modal" data-bs-target="#viewModal"
+                            (click)="showDetails(autorisation)">
+                            <i class="fa fa-eye"></i>
+                        </button>
+                        <td>
+                            <button class="authorize-button" (click)="authorizeBanner(autorisation.nom, true)"
+                                *ngIf="!autorisation.accepted && !autorisation.rejected">Accepter</button>
+                            <button class="reject-button" (click)="authorizeBanner(autorisation.nom, false)"
+                                *ngIf="!autorisation.accepted && !autorisation.rejected">Refuser</button>
+                            <span *ngIf="autorisation.accepted">Acceptée</span>
+                            <span *ngIf="autorisation.rejected">Refusée</span>
+                        </td>                        
+                </tr>
+            </tbody>
+        </table>
+        <div class="pagination">
+            <button [disabled]="currentPage === 1" (click)="currentPage = currentPage - 1">Précédente</button>
+            <button *ngFor="let page of getPaginationArray()" [class.active]="currentPage === page"
+                (click)="currentPage = page">{{ page }}</button>
+            <button [disabled]="currentPage === getTotalPages()"
+                (click)="currentPage = currentPage + 1">Suivante</button>
+        </div>
+    </div>
+
+</main>
+
+<form>
+    <div class="modal fade" id="viewModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Voir les détails de la bannière</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        fdprocessedid="rus26i"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="width">Description :</label>
+                        <input type="texterea" name="description" [(ngModel)]="autorisation.description"
+                            class="form-control" id="description" [disabled]="isDetailsDisabled"
+                            [value]="autorisation.description ? autorisation.description : ''">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="width">Largeur :</label>
+                                <input type="text" name="width" [(ngModel)]="autorisation.width" class="form-control"
+                                    id="width" [disabled]="isDetailsDisabled"
+                                    [value]="autorisation.width ? autorisation.width : ''">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="height">Hauteur :</label>
+                                <input type="text" name="height" [(ngModel)]="autorisation.height" class="form-control"
+                                    id="height" [disabled]="isDetailsDisabled"
+                                    [value]="autorisation.height ? autorisation.height : ''">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="callToAction">Call to Action :</label>
+                        <input type="text" name="callToAction" [(ngModel)]="autorisation.callToAction"
+                            class="form-control" id="callToAction" [disabled]="isDetailsDisabled"
+                            [value]="autorisation.callToAction ? autorisation.callToAction : ''">
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="startDate">Date de début :</label>
+                                <input type="text" name="startDate" [(ngModel)]="autorisation.startDate"
+                                    class="form-control" id="startDate" [disabled]="isDetailsDisabled"
+                                    [value]="autorisation.startDate ? autorisation.startDate : ''">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="endDate">Date de fin :</label>
+                                <input type="text" name="endDate" [(ngModel)]="autorisation.endDate"
+                                    class="form-control" id="endDate" [disabled]="isDetailsDisabled"
+                                    [value]="autorisation.endDate ? autorisation.endDate : ''">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="startTime">Heure de début :</label>
+                                <input type="text" name="startTime" [(ngModel)]="autorisation.startTime"
+                                    class="form-control" id="startTime" [disabled]="isDetailsDisabled"
+                                    [value]="autorisation.startTime ? autorisation.startTime : ''">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="endTime">Heure de fin :</label>
+                                <input type="text" name="endTime" [(ngModel)]="autorisation.endTime"
+                                    class="form-control" id="endTime" [disabled]="isDetailsDisabled"
+                                    [value]="autorisation.endTime ? autorisation.endTime : ''">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="title">Titre :</label>
+                                <input type="text" name="title" [(ngModel)]="autorisation.title" class="form-control"
+                                    id="title" [disabled]="isDetailsDisabled"
+                                    [value]="autorisation.title ? autorisation.title : ''">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="subtitle">Sous-titre :</label>
+                                <input type="text" name="subtitle" [(ngModel)]="autorisation.subtitle"
+                                    class="form-control" id="subtitle" [disabled]="isDetailsDisabled"
+                                    [value]="autorisation.subtitle ? autorisation.subtitle : ''">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="status">Type de création de bannière :</label>
+                        <input type="text" name="status" [(ngModel)]="autorisation.status" class="form-control"
+                            id="status" [disabled]="isDetailsDisabled"
+                            [value]="autorisation.status ? autorisation.status : ''">
+                    </div>
+                    <div class="form-group">
+                        <label for="placeholder">Placeholder :</label>
+                        <input type="text" name="placeholder" [(ngModel)]="autorisation.placeholder"
+                            class="form-control" id="placeholder" [disabled]="isDetailsDisabled"
+                            [value]="autorisation.placeholder ? autorisation.placeholder : ''">
+                    </div>
+                    <div class="form-group">
+                        <label for="plateformeType">Type de plateforme :</label>
+                        <input type="text" name="plateformeType" [(ngModel)]="autorisation.plateformeType"
+                            class="form-control" id="plateformeType" [disabled]="isDetailsDisabled"
+                            [value]="autorisation.plateformeType ? autorisation.plateformeType : ''">
+                    </div>
+                    <div class="form-group">
+                        <label for="htmlcode">Code HTML :</label>
+                        <div class="input-group">
+                            <textarea name="htmlcode" [(ngModel)]="autorisation.htmlcode" class="form-control"
+                                id="htmlcode" [disabled]="isDetailsDisabled">{{ autorisation.htmlcode }}</textarea>
+                            <button *ngIf="autorisation.htmlcode" class="btn btn-outline-secondary" type="button"
+                                (click)="copyToClipboard()" title="Copy to clipboard">
+                                <i class="bi bi-clipboard"></i>
+                            </button>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        (click)="resetDetails()">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

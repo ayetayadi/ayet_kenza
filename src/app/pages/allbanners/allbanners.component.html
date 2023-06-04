@@ -1,0 +1,66 @@
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h3>Liste des bannières</h3>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/acceuilannonceur">Accueil</a></li>
+                <li class="breadcrumb-item active">Tous les bannières</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="container">
+        <input class="input1" type="text" [(ngModel)]="searchText" placeholder="Chercher Bannière">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nom de la bannière</th>
+                    <th scope="col">Image de la bannière</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Nom de la campagne</th>
+                    <th scope="col">Date de création</th>
+                    <th scope="col">Date de Modification</th>
+                    <th scope="col">Date de début d'activation</th>
+                    <th scope="col">Date de fin d'activation</th>
+                    <th scope="col">Heure de début d'activation</th>
+                    <th scope="col">Heure de fin d'activation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let banner of getPaginatedBanners(); let i = index">
+                    <td>{{ (currentPage - 1) * itemsPerPage + i + 1 }}</td>
+                    <td>{{banner.nom }}</td>
+                    <td><img class="image" [src]="'data:image/jpeg;base64,' + banner.image" class="d-block w-100" alt="..."/></td>
+                    <td>{{ banner.description }}</td>
+                    <td>{{ banner.nom_campagne }}</td>
+                    <td>{{ banner.createdAt }}</td>
+                    <td>{{ banner.updateAt }}</td>
+                    <td>{{ banner.startDate }}</td>
+                    <td>{{ banner.endDate }}</td>
+                    <td>{{ banner.startTime }}</td>
+                    <td>{{ banner.endTime }}</td>
+
+                </tr>
+            </tbody>
+        </table>
+        <div class="pagination">
+            <button [disabled]="currentPage === 1" (click)="currentPage = currentPage - 1">Précédente</button>
+            <button *ngFor="let page of getPaginationArray()" [class.active]="currentPage === page"
+                (click)="currentPage = page">{{ page }}</button>
+            <button [disabled]="currentPage === getTotalPages()"
+                (click)="currentPage = currentPage + 1">Suivante</button>
+        </div>
+    </div>
+
+    <ng-template #pasAnnonceurs>
+        <section class="section min-vh-100 d-flex flex-column align-items-center justify-content-center">
+            <div class="col-lg-6">
+                <h2>Pas des bannières!! 😵</h2>
+                <h3>Créez vos bannières dans une campagne publicitaire</h3>
+            </div>
+        </section>
+    </ng-template>
+</main>

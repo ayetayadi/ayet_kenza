@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,29 +10,19 @@ export class SharedService {
 
   private token: string;
 
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient, private cookieService: CookieService) { 
     this.token = "";
   }
-
-  forgotPassword(email: string) {
-    return this.http.post('http://localhost:3000/forgotPassword', { email: email });
-  }
-
-
-  resetPassword(passwordResetToken: string, password: string, confirmPassword: string) {
-    const body = { password, confirmPassword };
-    const url = `http://localhost:3000/resetPassword?passwordResetToken=${passwordResetToken}`;
-    return this.http.post(url, body);
-  }
-
   
   setAdminToken(token: string) {
     this.token = token;
   }
 
   getAdminToken(): string {
-    return this.token;
-  }
+    const accessToken = this.cookieService.get('accessToken');
+    const refreshToken = this.cookieService.get('refreshToken');
+    return accessToken;
+    }
 
 
   setAnnonceurToken(token: string) {
@@ -39,21 +30,30 @@ export class SharedService {
   }
 
   getAnnonceurToken(): string {
-    return this.token;
+    const accessToken = this.cookieService.get('accessToken');
+    const refreshToken = this.cookieService.get('refreshToken');
+    console.log(accessToken);
+    return accessToken;
   }
 
+  setMemberToken(token: string) {
+    this.token = token;
+  }
 
+  getMemberToken(): string {
+    const accessMemberToken = this.cookieService.get('accessMemberToken');
+   console.log(accessMemberToken);
+    return accessMemberToken;
+  }
   setToken(token: string) {
     this.token = token;
   }
 
   getToken(): string {
-    return this.token;
-  }
-
-  verifyToken(token: string): Observable<any> {
-    return this.http.get(`http://localhost:3000/verifyRole?token=${token}`);
-  }
+    const accessToken = this.cookieService.get('accessToken');
+    const refreshToken = this.cookieService.get('refreshToken');
+    return accessToken;
+    }
 
 }
 

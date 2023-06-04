@@ -1,13 +1,99 @@
 <main id="main">
-    <div class="wrapper">
-    <form #form (ngSubmit)="onSubmit(form)" enctype="multipart/form-data">
-        <h5 class="MuiTypography-root MuiTypography-h5 css-vsfzib">Créez votre bannière! 💡</h5>
-        <input type="text" name="nom" placeholder="Nom de la bannière">
-        <input type="textarea" name="description" placeholder="Description">
-        <input type="text" name="title" placeholder="Title">
-        <input type="text" name="subtitle" placeholder="Sous-titre">
-        <input type="file" name="image">
-        <button type="submit">Enregister la bannière</button>
-      </form>
+  <div class="wrapper">
+    <div class="row">
+      <div class="col-lg-15">
+        <form (submit)="onSubmit()">
+          <h4 class="MuiTypography-root MuiTypography-h4 css-vsfzib" style="margin-bottom: 50px;">Créez votre bannière et publiez-la sur <span style="color:  #9155FD;">Ijeni.tn</span>! 💡</h4>
+          <div class="form-group row">
+            <label for="nom" class="col-form-label text-right">Nom de la bannière:</label>
+            <div class="col-sm-12">
+              <input type="text" class="form-control" id="nom" [(ngModel)]="banner.nom" name="nom"
+                placeholder="Nom de la bannière">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="description" class="col-form-label">Description:</label>
+            <div class="col-sm-12">
+              <textarea type="textarea" class="form-control" id="description" [(ngModel)]="banner.description"
+                name="description" placeholder="Description"></textarea>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-sm-6">
+              <label for="startDate" class="col-form-label">Date de début:</label>
+              <input type="date" class="form-control" id="startDate" [(ngModel)]="banner.startDate" name="startDate"
+                placeholder="Date de début">
+            </div>
+            <div class="col-sm-6">
+              <label for="endDate" class="col-form-label">Date de fin:</label>
+              <input type="date" class="form-control" id="endDate" [(ngModel)]="banner.endDate" name="endDate"
+                placeholder="Date de fin">
+            </div>
+          </div>
+          <div class="form-group row">
+            <h5>
+              Choisissez l'horaire de diffusion de votre bannière publicitaire dans l'application Ijeni.</h5>
+            <div class="col-sm-6">
+              <label for="startDate" class="col-form-label">Heure de début:</label>
+              <input type="time" class="form-control" id="startTime" [(ngModel)]="banner.startTime" name="startTime"
+                placeholder="Heure de début">
+            </div>
+            <div class="col-sm-6">
+              <label for="endDate" class="col-form-label">Heure de fin:</label>
+              <input type="time" class="form-control" id="endTime" [(ngModel)]="banner.endTime" name="endTime"
+                placeholder="Heure de fin">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-6">
+              <label for="title" class="col-form-label">Titre:</label>
+              <input type="text" class="form-control" id="title" [(ngModel)]="banner.title" name="title"
+                placeholder="Titre">
+            </div>
+            <div class="col-sm-6">
+              <label for="subtitle" class="col-form-label">Sous-titre:</label>
+              <input type="text" class="form-control" id="subtitle" [(ngModel)]="banner.subtitle" name="subtitle"
+                placeholder="Sous-titre">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="callToAction" class="col-form-label">Appel à l'action:</label>
+            <div class="col-sm-12">
+              <input type="text" class="form-control" id="callToAction" [(ngModel)]="banner.callToAction"
+                name="callToAction" placeholder="www.exemple.com">
+            </div>
+          </div>
+          <div class="form-group row">
+            
+            <label for="plateformeType">Type de plateforme:</label>
+            <select id="plateformeType" name="plateformeType" [(ngModel)]="banner.plateformeType" class="form-control">
+              <option value="" disabled selected>Choisissez le type d'application d'Ijeni sur lequel vous souhaitez diffuser votre bannière publicitaire</option>
+              <option value="Application Mobile">Application Mobile</option>
+              <option value="Application web">Site web</option>
+
+            </select>
+          </div>
+
+          <div class="form-group">
+            
+            <label for="placeholder">Zone de la bannière:</label>
+            <select id="placeholder" name="placeholder" [(ngModel)]="banner.placeholder" class="form-control">
+              <option value="" disabled selected>Choisissez votre zone de la bannière sur Ijeni.tn</option>
+              <option value="page d'acceuil">Page d'acceuil</option>
+              <option value="page de catégories">Page de catégories</option>
+            </select>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-15">
+              <input type="file" class="form-control-file" id="image" (change)="onFileSelected($event)" name="image"
+                placeholder="Choisir une image">
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary">Enregistrer</button>
+        </form>
+      </div>
     </div>
+  </div>
 </main>

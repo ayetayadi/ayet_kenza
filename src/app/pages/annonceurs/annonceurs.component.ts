@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
 import { AccountService } from 'src/app/services/account.service';
 import { SharedService } from 'src/app/services/shared.service';
+import { PaiementService } from 'src/app/services/paiement.service';
 
 @Component({
   selector: 'app-annonceurs',
@@ -16,6 +17,7 @@ export class AnnonceursComponent implements OnInit {
   itemsPerPage = 5;
   currentPage = 1;
   searchText = '';
+  selectedAnnonceur: any = {};
 
   annonceurEmail: string = '';
 
@@ -30,34 +32,76 @@ export class AnnonceursComponent implements OnInit {
   domaineE: string = '';
 
   message: string = '';
+  isDetailsDisabled: boolean = true;
+  factures: any[];
 
-
-  constructor(private http: HttpClient, private elementRef: ElementRef, public shared: SharedService, public account: AccountService) { }
+  annonceur = {
+    username :'',
+    email:'',
+    tel :'',
+    nomE : '',
+    emailE : '',
+    adresseE : '',
+    domaineE : '',
+  }; 
+  constructor(private http: HttpClient, private elementRef: ElementRef, public shared: SharedService, public accountService: AccountService, private paiementService: PaiementService) { }
 
   ngOnInit(): void {
-    this.account.getAnnonceurs().subscribe((data: any[]) => {
+    this.accountService.getAnnonceurs().subscribe((data: any[]) => {
       console.log(data);
       this.annonceurs = data;
     }, error => {
       console.log(error);
     });
 
+    this.getFactures();
 
     var s = document.createElement("script");
     s.type = "text/javascript";
     s.src = "../assets/js/main.js";
     this.elementRef.nativeElement.appendChild(s);
-
-
-
-
-
   }
 
+
+openModal(annonceur: any) {
+  this.isDetailsDisabled = false;
+
+  this.username = annonceur.username;
+  this.email = annonceur.email;
+  this.tel = annonceur.tel;
+  this.nomE = annonceur.nomE;
+  this.emailE = annonceur.emailE;
+  this.adresseE = annonceur.adresseE;
+  this.domaineE = annonceur.domaineE;
+}
+
+resetDetails() {
+  this.username = '';
+  this.email = '';
+  this.tel = '';
+  this.nomE = '';
+  this.emailE = '';
+  this.adresseE = '';
+  this.domaineE = '';
+
+  this.isDetailsDisabled = true;
+}
+
+  showDetails(annonceur: any): void {
+    this.username = annonceur.username;
+    this.email = annonceur.email;
+    this.tel = annonceur.tel;
+    this.nomE = annonceur.nomE;
+    this.emailE = annonceur.emailE;
+    this.adresseE = annonceur.adresseE;
+    this.domaineE = annonceur.domaineE;
+  }
+  
+
   deleteAnnonceur(email: string) {
-    if (window.confirm(`Are you sure you want to delete this annonceur with email ${email}?`)) {
-      console.log("Deleting annonceur with email:", email);
-      this.account.deleteAnnonceur(email).subscribe(
+    if (window.confirm(`Êtes-vous sûr de vouloir supprimer l'annonceur avec email ${email}?`)) {
+      console.log(`Suppression de l'annonceur avec succés`);
+      this.accountService.deleteAnnonceur(email).subscribe(
         () => {
           console.log(`Annonceur avec email ${email} supprimé`);
           this.message = `Annonceur avec email ${email} supprimé`;
@@ -84,7 +128,7 @@ export class AnnonceursComponent implements OnInit {
 
   editAnnonceur(): void {
     console.log(this.getEmail(this.emailA));
-    this.account.editAnnonceur(this.getEmail(this.emailA), this.username, this.email, this.tel, this.nomE, this.emailE, this.domaineE, this.adresseE).subscribe(
+    this.accountService.editAnnonceur(this.getEmail(this.emailA), this.username, this.email, this.tel, this.nomE, this.emailE, this.domaineE, this.adresseE).subscribe(
       () => {
         console.log('Annonceur mis à jour avec succès');
       },
@@ -96,13 +140,28 @@ export class AnnonceursComponent implements OnInit {
 
 
   createAnnonceur(): void {
-    this.account.createAnnonceur(this.username, this.email, this.password)
+    this.accountService.createAnnonceur(this.username, this.email, this.password)
       .subscribe(
-        (result) => alert('Annonceur ajouté avec succès!'),
+        (result) => {alert('Invitation au nouveau annonceur est envoyée avec succès!')
+      
+
+      },
         error => console.error(error)
       );
   }
 
+  getFactures() {
+    this.paiementService.getAnnonceursFactures()
+      .subscribe(
+        factures => {
+          this.factures = factures;
+        },
+        error => {
+          console.error(error);
+          // Handle error
+        }
+      );
+  }
 
   getPaginatedAnnonceurs() {
     const start = (this.currentPage - 1) * this.itemsPerPage;

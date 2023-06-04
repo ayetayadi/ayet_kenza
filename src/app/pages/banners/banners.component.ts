@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BannerService } from 'src/app/services/banner.service';
 import { CampagneService } from 'src/app/services/campagne.service';
 import { forkJoin } from 'rxjs';
+import { AccountService } from 'src/app/services/account.service';
+import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
   selector: 'app-banners',
@@ -14,6 +16,9 @@ export class BannersComponent implements OnInit {
   banners: any[] = [];
   campagnes: any[] = [];
 
+  selectedStatus: string = '';
+
+
   itemsPerPage = 5;
   currentPage = 1;
   searchText = '';
@@ -22,26 +27,36 @@ export class BannersComponent implements OnInit {
 
   nom_campagne: string = '';
 
-  constructor(private route: ActivatedRoute, private campagneService: CampagneService, private bannerService: BannerService, private router: Router) {
+  isLoadingBanners = true;
+
+  typeOffre: string = '';
+
+  constructor(private shared: SharedService, private route: ActivatedRoute, private accountService: AccountService, private campagneService: CampagneService, private bannerService: BannerService, private router: Router) {
   }
 
-  navigateToUpload() {
-    this.router.navigate(['/téléchargerBannière']);
-  }
-
-  
-  navigateToDesign() {
-    this.router.navigate(['/design']);
-  }
 
   ngOnInit(): void {
     this.nom_campagne = this.route.snapshot.paramMap.get('nom_campagne') || '';
     console.log(this.nom_campagne);
     this.getAllBannersByCampagne();
-}
-  
+    this.getNomCampagne();
 
-  getAllCampagnes(): void{
+    const token = this.shared.getAnnonceurToken();
+    this.accountService.getPermission(token).subscribe(
+      response => {
+        this.typeOffre = response.typeOffre;
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+
+  getNomCampagne() {
+    console.log(this.nom_campagne);
+  }
+
+  getAllCampagnes(): void {
     this.campagneService.getAllCampagnes().subscribe((data: any[]) => {
       console.log(data);
       this.campagnes = data;
@@ -52,11 +67,14 @@ export class BannersComponent implements OnInit {
   }
 
   getAllBannersByCampagne() {
-    this.bannerService.getAllBannersByCampagne(this.nom_campagne).subscribe((data: any[]) => {
+    this.isLoadingBanners = true; // set isLoadingBanners to true
+    this.bannerService.getAllBannersByCampagne(this.nom_campagne).subscribe(data => {
       console.log(data);
-      this.banners = data;
+      this.banners = data.banners;
+      this.isLoadingBanners = false; // set isLoadingBanners to false when data is loaded
     }, error => {
       console.log(error);
+      this.isLoadingBanners = false; // set isLoadingBanners to false when an error occurs
     });
   }
 
@@ -66,6 +84,23 @@ export class BannersComponent implements OnInit {
   }
 
 
+  deleteBanner(nom_campagne: string, nom: string) {
+    if (confirm(`Êtes-vous sûr de vouloir supprimer ${nom} dans ${nom_campagne}?`)) {
+      this.bannerService.deleteBanner(nom_campagne, nom)
+        .subscribe(
+          response => {
+            {
+              console.log(response);
+              alert(`Votre bannière ${nom} de la campagne publicitaire ${nom_campagne} a été supprimé`)
+            };
+            const index = this.banners.findIndex(banner => banner.nom === nom);
+            this.banners.splice(index, 1);
+          },
+          error => console.log(error)
+        );
+    }
+  }
+
   getPaginatedBanners() {
     const start = (this.currentPage - 1) * this.itemsPerPage;
     const end = start + this.itemsPerPage;
@@ -73,12 +108,19 @@ export class BannersComponent implements OnInit {
     if (this.searchText) {
       const searchTextLower = this.searchText.toLowerCase();
       filteredBanners = filteredBanners.filter(
-        banners =>
-          banners.nom.toLowerCase().includes(searchTextLower) 
+        banner =>
+          banner.nom.toLowerCase().includes(searchTextLower)
+      );
+    }
+    if (this.selectedStatus) {
+      filteredBanners = filteredBanners.filter(
+        banner =>
+          this.banners[0].status === this.selectedStatus
       );
     }
     return filteredBanners.slice(start, end);
   }
+
 
   getPaginationArray() {
     const totalPages = Math.ceil(this.banners.length / this.itemsPerPage);

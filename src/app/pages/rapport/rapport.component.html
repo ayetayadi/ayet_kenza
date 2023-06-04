@@ -1,0 +1,66 @@
+<main id="main" class="main" >
+    <div class="pagetitle">
+        <h1>Rapport de la bannière</h1>
+        <nav>
+           <ol class="breadcrumb">
+            <li class="breadcrumb-item">Bannière</li>
+             <li class="breadcrumb-item active">Rapport</li>
+           </ol>
+        </nav>
+     </div>
+    <div>
+        <div class="row" *ngFor="let rapport of rapports">
+            <div class="col-xxl-4 col-md-6">
+               <div class="card info-card sales-card">
+                  
+                  <div class="card-body">
+                    <h5 class="card-title">Vues <span>| {{rapport.startDate}} --> {{rapport.endDate}}</span></h5>
+                     <div class="d-flex align-items-center">
+                        <div class="ps-3">
+                           <h3>{{rapport.vues}}</h3>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-xxl-4 col-md-6">
+               <div class="card info-card revenue-card">
+                  
+                  <div class="card-body">
+                     <h5 class="card-title">Clics <span>| {{rapport.startDate}} --> {{rapport.endDate}}</span></h5>
+                     <div class="d-flex align-items-center">
+                        <div class="ps-6">
+                           <h3>{{rapport.clicks}}</h3>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-xxl-4 col-xl-12">
+               <div class="card info-card customers-card">
+                  
+                  <div class="card-body">
+                     <h5 class="card-title">Impressions <span>| {{rapport.startDate}} --> {{rapport.endDate}}</span></h5>
+                     
+                     <div class="d-flex align-items-center">
+                        <div class="ps-6">
+                           <h3>{{rapport.impressions}}</h3>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            
+         </div>
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Rapport <span></span></h5>
+                    <canvas #lineCanvas style="height:10vh; width:20vw"></canvas>
+                    <hr color="red">
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
